@@ -1,0 +1,5 @@
+hpac
+*.zip
+tests/output/*
+tests/diff/*
+hpac.dSYM/

@@ -5,11 +5,11 @@
  * Email: <xdrahn00@stud.fit.vutbr.cz>
  * File: hpac.c
  *
- * Description: This file contains start function called main() which uses method getParams() from modul Params, method getGraph() from modul Graph. 
- * Also there is finalized set up params start_vertex, end_vertex (at this moment because when are unset params start_vertex, end_vertex is   
+ * Description: This file contains start function called main() which calls methods getParams() from modul Params, method getGraph() from modul Graph etc. 
+ * Also there is finalized params setting start_vertex, end_vertex (at this moment because when are unset params start_vertex, end_vertex is
  * used first graph vertex)
- * After this is called main algorithm in method algorithm() using threads per each vertex on the way and semaphores for output printing.
- * When every thread end program end too and return EOK.
+ * After this is called main algorithm placed in method algorithm() using recursion so calling itself for next each vertex on the way.
+ * When last algorithm() is ended program end with EOK or given error code.
  */
 
 #include "hpac.h"
@@ -126,18 +126,18 @@ int main(int argc, char *argv[]) {
   }
 
   // main algorithm
-  fprintf(stderr, "\nDEBUG: main algorithm successfully started.\n\n");
 
   // arguments
   TVertex** vertex_out = malloc(sizeof(TVertex));
   vertex_out[0] = getVertex(&graph, params.start_vertex);
 
   // run algorithm
+  fprintf(stderr, "\nDEBUG: main algorithm (brutal force) successfully started.\n\n");
   algorithm(&params, &graph, 1, vertex_out);
   fprintf(stderr, "\nDEBUG: main algorithm successfully ended.\n\n");
 
+  // clean
   cleanAll(params, graph);
-
   fprintf(stderr, "\nDEBUG: clean*() successfuly ended.\n\n");
 
   return ecode;
@@ -149,7 +149,7 @@ int algorithm(TParams* params, TGraph* graph, int vertex_out_count, TVertex** ve
   // from previous node 
   TVertex* vertex = vertex_out[vertex_out_count - 1];
 
-  fprintf(stderr, "DEBUG: Thread %s. Init.\n", vertex->name);
+  fprintf(stderr, "DEBUG: Vertex %s. Init.\n", vertex->name);
 
   // loop every vertex connected "from" vertex you have
   for(int i = 0; i < vertex->edge_count; i++) {
@@ -162,7 +162,7 @@ int algorithm(TParams* params, TGraph* graph, int vertex_out_count, TVertex** ve
       vertex_next = vertex->edge[i]->dest;
     }
 
-    fprintf(stderr, "DEBUG: Thread %s. Params start_vertex: %s, Params end_vertex: %s, Vertex %s, Next vertex %s, End vertex %s, Graph vertex count %i, Vertex_out_count %i\n", vertex->name, params->start_vertex, params->end_vertex, vertex->name, vertex_next->name, params->end_vertex, graph->vertex_count, vertex_out_count);
+    fprintf(stderr, "DEBUG: Vertex %s. Params start_vertex: %s, Params end_vertex: %s, Vertex %s, Next vertex %s, End vertex %s, Graph vertex count %i, Vertex_out_count %i\n", vertex->name, params->start_vertex, params->end_vertex, vertex->name, vertex_next->name, params->end_vertex, graph->vertex_count, vertex_out_count);
 
     // can not go into end_vertex if it's not a last one (!)
     if(strcmp(vertex_next->name, params->end_vertex) == 0 && ((graph->vertex_count != vertex_out_count && strcmp(params->start_vertex, params->end_vertex) == 0) || (graph->vertex_count != vertex_out_count + 1 && strcmp(params->start_vertex, params->end_vertex) != 0))) {
@@ -174,16 +174,18 @@ int algorithm(TParams* params, TGraph* graph, int vertex_out_count, TVertex** ve
 
       // cycle
       if(graph->vertex_count == vertex_out_count) {
-         fprintf(stderr, "DEBUG: Thread %s. Hamilton path or circle found.\n", vertex->name);
+
+         fprintf(stderr, "DEBUG: Vertex %s. Hamilton path or circle found.\n", vertex->name);
+
          for(int j = 0; j < graph->vertex_count - 1; j++) {
             printf("%s %s\n", vertex_out[j]->name, vertex_out[j + 1]->name);
          }
          printf("%s %s\n", vertex_out[graph->vertex_count - 1]->name, params->end_vertex);
          printf("\n");
       } else { 
-      // path
+         // path
 
-         fprintf(stderr, "DEBUG: Thread %s. Hamilton path or circle found.\n", vertex->name);
+         fprintf(stderr, "DEBUG: Vertex %s. Hamilton path or circle found.\n", vertex->name);
          for(int j = 0; j < graph->vertex_count - 2; j++) {
             printf("%s %s\n", vertex_out[j]->name, vertex_out[j + 1]->name);
          }
@@ -198,26 +200,31 @@ int algorithm(TParams* params, TGraph* graph, int vertex_out_count, TVertex** ve
     if(isVertexValid(vertex_out, vertex_out_count, vertex_next->name) == 0)  {
 
        // arguments
-       TVertex** vertex_out_next = realloc(vertex_out, (vertex_out_count + 1) * sizeof(TVertex));
+       TVertex** vertex_out_next = malloc((vertex_out_count + 1) * sizeof(TVertex));
        if(vertex_out_next == NULL) {
           return EALLOC;
        }
-       vertex_out_next[vertex_out_count - 1] = NULL;
+
+       //vertex_out_next[vertex_out_count + 1] = NULL;
        for(int i = 0; i < vertex_out_count; i++) {
           vertex_out_next[i] = getVertex(graph, vertex_out[i]->name);
-          fprintf(stderr, "DEBUG: Thread %s. Init vertex_out %i : %s.\n", vertex->name, i, vertex_out[i]->name);
+          fprintf(stderr, "DEBUG: Vertex %s. Init vertex_out %i : %s.\n", vertex->name, i, vertex_out[i]->name);
        }
+
        int vertex_out_count_next = vertex_out_count + 1;
        vertex_out_next[vertex_out_count] = vertex_next;
 
-       fprintf(stderr, "DEBUG: Thread %s. Next vertex: %s. Run child.\n", vertex->name, vertex_next->name);
+       fprintf(stderr, "DEBUG: Vertex %s. Next vertex: %s. Run child.\n", vertex->name, vertex_next->name);
 
-       // run algorithm again (recursive)
-       algorithm(params, graph, vertex_out_count_next, vertex_out);
+       algorithm(params, graph, vertex_out_count_next, vertex_out_next);
     }
   }
-  
-  fprintf(stderr, "DEBUG: Thread %s. End.\n", vertex->name);
+
+  fprintf(stderr, "DEBUG: Vertex %s. End.\n", vertex->name);
+
+
+  // clean
+  free(vertex_out);
 
   return EOK;
 } 

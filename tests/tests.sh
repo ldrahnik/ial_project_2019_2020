@@ -1,10 +1,10 @@
 #!/bin/bash
 
-# Name: Adam Láníček, Holden Ďurovič, Honza Novotný, Drahník Lukáš
+#
+# Name: Drahník Lukáš
 # Project: IAL: náhradní projekt: 2. Hamiltonova cesta a cyklus v grafu
-# Date: 14.11.2018
-# Email: <xlanic04@stud.fit.vutbr.cz>, <xdurov01@stud.fit.vutbr.cz>, <xnovot1e@stud.fit.vutbr.cz>, <xdrahn00@stud.fit.vutbr.cz>
-# File: tests.sh
+# Date: 20.10.2019
+# Email: <xdrahn00@stud.fit.vutbr.cz>
 # Description: Bash script to run the program with different graphs and parameters to test its functionality
 
 OUTPUT_DIR=./tests/output

@@ -40,8 +40,11 @@ TParams getParams(int argc, char *argv[]) {
 
   // getopt
   int c;
-  while ((c = getopt(argc, argv, "hds:e:")) != -1) {
+  while ((c = getopt(argc, argv, "hids:e:")) != -1) {
     switch (c) {
+      case 'i':
+        params.show_info = 1;
+        break;
       case 'h':
         params.show_help_message = 1;
  	    return params;

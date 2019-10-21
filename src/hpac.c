@@ -14,6 +14,9 @@
 
 #include "hpac.h"
 
+/* count of algorithm() calls */
+int algorithm_calls_count = 0;
+
 const char *HELP_MSG = {
   "HPAC - Hamilton paths and cirtuits\n\n"
   "Description ..\n\n"
@@ -22,6 +25,8 @@ const char *HELP_MSG = {
   "Options:\n"
   "-s start vertex [ OPTIONAL ], default start vertex is first vertex in file\n"
   "-e end vertex [ OPTIONAL ], default end vertex is first vertex in file\n"
+  "-d debug [ OPTIONAL ], show debug messages\n"
+  "-i info [ OPTIONAL ], show statistics info of algorithm at the end\n"
 };
 
 /* clean params structures and graph structures */
@@ -142,6 +147,10 @@ int main(int argc, char *argv[]) {
 
   algorithm(&params, &graph, 1, vertex_out);
 
+  // statistics
+  if(params.show_info)
+     fprintf(stderr, "STATISTICS: method algorithm() called: %i\n", algorithm_calls_count);
+
   if(params.show_debug_messages)
     fprintf(stderr, "\nDEBUG: main algorithm successfully ended.\n\n");
 
@@ -156,6 +165,8 @@ int main(int argc, char *argv[]) {
 
 /* algorithm - finding Hamilton path and circle using brute force method */
 int algorithm(TParams* params, TGraph* graph, int vertex_out_count, TVertex** vertex_out) {
+
+  algorithm_calls_count++;
 
   // from previous node 
   TVertex* vertex = vertex_out[vertex_out_count - 1];
@@ -221,7 +232,6 @@ int algorithm(TParams* params, TGraph* graph, int vertex_out_count, TVertex** ve
           return EALLOC;
        }
 
-       //vertex_out_next[vertex_out_count + 1] = NULL;
        for(int i = 0; i < vertex_out_count; i++) {
           vertex_out_next[i] = getVertex(graph, vertex_out[i]->name);
 
@@ -240,7 +250,7 @@ int algorithm(TParams* params, TGraph* graph, int vertex_out_count, TVertex** ve
   }
 
   if(params->show_debug_messages)
-     fprintf(stderr, "DEBUG: Vertex %s. End.\n", vertex->name);
+     fprintf(stderr, "DEBUG: Vertex %s. End. Total count of method() calls is: %i\n", vertex->name, algorithm_calls_count);
 
   // clean
   free(vertex_out);

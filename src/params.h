@@ -14,6 +14,7 @@
 #include "error.h"
 
 typedef struct params {
+  int show_info; // option i
   int show_debug_messages; // option d
   int show_help_message; // option h
   int ecode; // error code

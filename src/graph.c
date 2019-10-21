@@ -34,21 +34,23 @@ TGraph getGraph(TParams params) {
    char *line = strtok_r(params.input, "\n", &end_line);
 
    while(line != NULL) {
-      fprintf(stderr, "DEBUG: Line: %s\n", line);
+
+      if(params.show_debug_messages)
+         fprintf(stderr, "DEBUG: Line: %s\n", line);
 
       // add src vertex
       if((vertex_src = strtok_r(line," ", &end_vertex)) == NULL) {
-         fprintf (stderr, "DEBUG: Format of input file fails on line: `%s`\n", line);
+         fprintf (stderr, "Format of input file fails on line: `%s`\n", line);
          graph.ecode = EGRAPH;
-	 return graph;
+	     return graph;
       }
       if((graph.ecode = addVertex(&graph, vertex_src)) != EOK) {
-          return graph;
+         return graph;
       }
 
       // add dest vertex
       if((vertex_dest = strtok_r(NULL, " ", &end_vertex)) == NULL) {
-         fprintf(stderr, "DEBUG: Format of input file fails on line: `%s`\n", line);
+         fprintf(stderr, "Format of input file fails on line: `%s`\n", line);
          graph.ecode = EGRAPH;
 	 return graph;
       }
@@ -58,14 +60,15 @@ TGraph getGraph(TParams params) {
       }
 
       // connect vertex's
-      addEdge(&graph, vertex_src, vertex_dest);
+      addEdge(&graph, vertex_src, vertex_dest, params.show_debug_messages);
 
       line = strtok_r(NULL, "\n", &end_line);
    }
 
-   free(line);	
+   free(line);
 
-   fprintf(stderr, "\nDEBUG: getGraph():structure successfully ended.\n\n");
+   if(params.show_debug_messages)
+      fprintf(stderr, "\nDEBUG: getGraph():structure successfully ended.\n\n");
 
    return graph;
 }
@@ -105,7 +108,9 @@ int isValidGraph(TGraph* graph, TParams* params) {
             is_dirac_condition_fulfilled = 0;
     }
 
-    fprintf (stderr, "DEBUG: Diract condition: %i.\n", is_dirac_condition_fulfilled);
+
+    if(params->show_debug_messages)
+      fprintf (stderr, "DEBUG: Diract condition: %i.\n", is_dirac_condition_fulfilled);
 
     // every vertex's not connected each other has sum of edge's more than count of all vertex (Ore condition)
     int is_ore_condition_fulfilled = 1;
@@ -117,7 +122,9 @@ int isValidGraph(TGraph* graph, TParams* params) {
        }
     }
 
-    fprintf (stderr, "DEBUG: Ore condition: %i.\n", is_ore_condition_fulfilled);
+
+    if(params->show_debug_messages)
+       fprintf (stderr, "DEBUG: Ore condition: %i.\n", is_ore_condition_fulfilled);
 
     // for every natural number k < ½ u is count of vertex with count of edges smaller than k (Pos condition)
     int is_posova_condition_fulfilled = 1;
@@ -131,7 +138,8 @@ int isValidGraph(TGraph* graph, TParams* params) {
            is_posova_condition_fulfilled = 0;
     }
 
-    fprintf (stderr, "DEBUG: Posova condition: %i.\n", is_posova_condition_fulfilled);
+    if(params->show_debug_messages)
+       fprintf (stderr, "DEBUG: Posova condition: %i.\n", is_posova_condition_fulfilled);
 
     // TODO: conditions failed on test example where path exist .0, .1 (0,0,0) so its not enough have atleast 1 condition
     /*if(is_dirac_condition_fulfilled || is_ore_condition_fulfilled || is_posova_condition_fulfilled) {
@@ -194,23 +202,23 @@ int initVertexEdge(TVertex* vertex) {
 }
 
 /* add if not exist */
-int addEdge(TGraph* graph, char* vertex_src_name, char* vertex_dest_name) {
+int addEdge(TGraph* graph, char* vertex_src_name, char* vertex_dest_name, int show_debug_messages) {
    int ecode = EOK;
 
    if(isVertexValid(graph->vertex, graph->vertex_count, vertex_src_name) && isVertexValid(graph->vertex, graph->vertex_count, vertex_dest_name)) {
       if(isEdgeValid(graph, vertex_src_name, vertex_dest_name) == 0) {
 
-	 // init edge
+	     // init edge
          TEdge* edge = initEdge();
          if(edge->ecode) {
             return edge->ecode;
          }
 
-	 // link src, dest vertex
+	     // link src, dest vertex
          TVertex* vertex_src = getVertex(graph, vertex_src_name);
          TVertex* vertex_dest = getVertex(graph, vertex_dest_name);
- 	 edge->src = vertex_src;
- 	 edge->dest = vertex_dest;
+ 	     edge->src = vertex_src;
+ 	     edge->dest = vertex_dest;
 
          // init graph edge
          if((ecode = initGraphEdge(graph)) != EOK) {
@@ -222,17 +230,19 @@ int addEdge(TGraph* graph, char* vertex_src_name, char* vertex_dest_name) {
          if((ecode = initVertexEdge(vertex_src)) != EOK) {
             return ecode;
          }
-	 vertex_src->edge[vertex_src->edge_count - 1] = edge;
+	     vertex_src->edge[vertex_src->edge_count - 1] = edge;
 
          // init vertex_dest edge
          if((ecode = initVertexEdge(vertex_dest)) != EOK) {
             return ecode;
          }
-	 vertex_dest->edge[vertex_dest->edge_count - 1] = edge;
+	     vertex_dest->edge[vertex_dest->edge_count - 1] = edge;
 
-         fprintf(stderr, "DEBUG: Edge: %s - %s\n", graph->edge[graph->edge_count - 1]->src->name, graph->edge[graph->edge_count - 1]->dest->name);
-         fprintf(stderr, "DEBUG: Edge: %s - %s\n", graph->edge[graph->edge_count - 1]->dest->name, graph->edge[graph->edge_count - 1]->src->name);
-	 fprintf(stderr, "DEBUG: Edge count: %i\n", graph->edge_count);
+         if(show_debug_messages) {
+            fprintf(stderr, "DEBUG: Edge: %s - %s\n", graph->edge[graph->edge_count - 1]->src->name, graph->edge[graph->edge_count - 1]->dest->name);
+            fprintf(stderr, "DEBUG: Edge: %s - %s\n", graph->edge[graph->edge_count - 1]->dest->name, graph->edge[graph->edge_count - 1]->src->name);
+	        fprintf(stderr, "DEBUG: Edge count: %i\n", graph->edge_count);
+         }
       }
    }
 

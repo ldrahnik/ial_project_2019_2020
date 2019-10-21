@@ -48,12 +48,14 @@ int main(int argc, char *argv[]) {
     return ecode;
   }
 
-  fprintf(stderr, "\nDEBUG: getParams() successfully ended.\n\n");
+  if(params.show_debug_messages) {
+    fprintf(stderr, "\nDEBUG: getParams() successfully ended.\n\n");
 
-  fprintf(stderr, "DEBUG: Input: \"%s\".\n", params.input);
-  fprintf(stderr, "DEBUG: Start vertex: \"%s\".\n", params.start_vertex);
-  fprintf(stderr, "DEBUG: End vertex: \"%s\".\n", params.end_vertex);
-  fprintf(stderr, "DEBUG: Show help message: \"%d\".\n\n", params.show_help_message);
+    fprintf(stderr, "DEBUG: Input: \"%s\".\n", params.input);
+    fprintf(stderr, "DEBUG: Start vertex: \"%s\".\n", params.start_vertex);
+    fprintf(stderr, "DEBUG: End vertex: \"%s\".\n", params.end_vertex);
+    fprintf(stderr, "DEBUG: Show help message: \"%d\".\n\n", params.show_help_message);
+  }
 
   // get graph
   TGraph graph = getGraph(params);
@@ -62,7 +64,8 @@ int main(int argc, char *argv[]) {
     return params.ecode;
   }
 
-  fprintf(stderr, "\nDEBUG: getGraph() successfully ended.\n\n");
+  if(params.show_debug_messages)
+    fprintf(stderr, "\nDEBUG: getGraph() successfully ended.\n\n");
 
   // default value start_vertex
   if(params.start_vertex == NULL) {
@@ -102,27 +105,29 @@ int main(int argc, char *argv[]) {
     return EGRAPH;
   }
 
-  fprintf(stderr, "\nDEBUG: getGraph():validation successfully ended.\n\n");
+  if(params.show_debug_messages) {
+    fprintf(stderr, "\nDEBUG: getGraph():validation successfully ended.\n\n");
 
-  fprintf(stderr, "DEBUG: Start vertex: \"%s\".\n", params.start_vertex);
-  fprintf(stderr, "DEBUG: End vertex: \"%s\".\n", params.end_vertex);
-  fprintf(stderr, "DEBUG: Start graph vertex: \"%s\".\n", graph.vertex[0]->name);
-  fprintf(stderr, "DEBUG: End graph vertex: \"%s\".\n", graph.vertex[graph.vertex_count - 1]->name);
-  fprintf(stderr, "DEBUG: Graph vertex count: \"%i\".\n", graph.vertex_count);
-  for(int i = 0; i < graph.vertex_count; i++) {
-    fprintf(stderr, "DEBUG: Vertex: \"%s\".\n", graph.vertex[i]->name);
-    fprintf(stderr, "DEBUG: Vertex edge count: \"%i\".\n", graph.vertex[i]->edge_count);
-    for(int j = 0; j < graph.vertex[i]->edge_count; j++) {
-      if(strcmp(graph.vertex[i]->edge[j]->dest->name, graph.vertex[i]->name) == 0) {
-        fprintf(stderr, "DEBUG: Vertex edge: \"%s - \"%s.\n", graph.vertex[i]->edge[j]->dest->name, graph.vertex[i]->edge[j]->src->name);
-      } else {
-        fprintf(stderr, "DEBUG: Vertex edge: \"%s - \"%s.\n", graph.vertex[i]->edge[j]->src->name, graph.vertex[i]->edge[j]->dest->name);
+    fprintf(stderr, "DEBUG: Start vertex: \"%s\".\n", params.start_vertex);
+    fprintf(stderr, "DEBUG: End vertex: \"%s\".\n", params.end_vertex);
+    fprintf(stderr, "DEBUG: Start graph vertex: \"%s\".\n", graph.vertex[0]->name);
+    fprintf(stderr, "DEBUG: End graph vertex: \"%s\".\n", graph.vertex[graph.vertex_count - 1]->name);
+    fprintf(stderr, "DEBUG: Graph vertex count: \"%i\".\n", graph.vertex_count);
+    for(int i = 0; i < graph.vertex_count; i++) {
+      fprintf(stderr, "DEBUG: Vertex: \"%s\".\n", graph.vertex[i]->name);
+      fprintf(stderr, "DEBUG: Vertex edge count: \"%i\".\n", graph.vertex[i]->edge_count);
+      for(int j = 0; j < graph.vertex[i]->edge_count; j++) {
+        if(strcmp(graph.vertex[i]->edge[j]->dest->name, graph.vertex[i]->name) == 0) {
+          fprintf(stderr, "DEBUG: Vertex edge: \"%s - \"%s.\n", graph.vertex[i]->edge[j]->dest->name, graph.vertex[i]->edge[j]->src->name);
+        } else {
+          fprintf(stderr, "DEBUG: Vertex edge: \"%s - \"%s.\n", graph.vertex[i]->edge[j]->src->name, graph.vertex[i]->edge[j]->dest->name);
+        }
       }
     }
-  }
-  fprintf(stderr, "DEBUG: Graph edge count: \"%i\".\n", graph.edge_count);
-  for(int j = 0; j < graph.edge_count; j++) {
-    fprintf(stderr, "DEBUG: Edge: \"%s - \"%s.\n", graph.edge[j]->src->name, graph.edge[j]->dest->name);
+    fprintf(stderr, "DEBUG: Graph edge count: \"%i\".\n", graph.edge_count);
+    for(int j = 0; j < graph.edge_count; j++) {
+      fprintf(stderr, "DEBUG: Edge: \"%s - \"%s.\n", graph.edge[j]->src->name, graph.edge[j]->dest->name);
+    }
   }
 
   // main algorithm
@@ -132,13 +137,19 @@ int main(int argc, char *argv[]) {
   vertex_out[0] = getVertex(&graph, params.start_vertex);
 
   // run algorithm
-  fprintf(stderr, "\nDEBUG: main algorithm (brutal force) successfully started.\n\n");
+  if(params.show_debug_messages)
+    fprintf(stderr, "\nDEBUG: main algorithm (brutal force) successfully started.\n\n");
+
   algorithm(&params, &graph, 1, vertex_out);
-  fprintf(stderr, "\nDEBUG: main algorithm successfully ended.\n\n");
+
+  if(params.show_debug_messages)
+    fprintf(stderr, "\nDEBUG: main algorithm successfully ended.\n\n");
 
   // clean
   cleanAll(params, graph);
-  fprintf(stderr, "\nDEBUG: clean*() successfuly ended.\n\n");
+
+  if(params.show_debug_messages)
+    fprintf(stderr, "\nDEBUG: clean*() successfuly ended.\n\n");
 
   return ecode;
 }
@@ -149,7 +160,8 @@ int algorithm(TParams* params, TGraph* graph, int vertex_out_count, TVertex** ve
   // from previous node 
   TVertex* vertex = vertex_out[vertex_out_count - 1];
 
-  fprintf(stderr, "DEBUG: Vertex %s. Init.\n", vertex->name);
+  if(params->show_debug_messages)
+    fprintf(stderr, "DEBUG: Vertex %s. Init.\n", vertex->name);
 
   // loop every vertex connected "from" vertex you have
   for(int i = 0; i < vertex->edge_count; i++) {
@@ -162,7 +174,8 @@ int algorithm(TParams* params, TGraph* graph, int vertex_out_count, TVertex** ve
       vertex_next = vertex->edge[i]->dest;
     }
 
-    fprintf(stderr, "DEBUG: Vertex %s. Params start_vertex: %s, Params end_vertex: %s, Vertex %s, Next vertex %s, End vertex %s, Graph vertex count %i, Vertex_out_count %i\n", vertex->name, params->start_vertex, params->end_vertex, vertex->name, vertex_next->name, params->end_vertex, graph->vertex_count, vertex_out_count);
+    if(params->show_debug_messages)
+       fprintf(stderr, "DEBUG: Vertex %s. Params start_vertex: %s, Params end_vertex: %s, Vertex %s, Next vertex %s, End vertex %s, Graph vertex count %i, Vertex_out_count %i\n", vertex->name, params->start_vertex, params->end_vertex, vertex->name, vertex_next->name, params->end_vertex, graph->vertex_count, vertex_out_count);
 
     // can not go into end_vertex if it's not a last one (!)
     if(strcmp(vertex_next->name, params->end_vertex) == 0 && ((graph->vertex_count != vertex_out_count && strcmp(params->start_vertex, params->end_vertex) == 0) || (graph->vertex_count != vertex_out_count + 1 && strcmp(params->start_vertex, params->end_vertex) != 0))) {
@@ -175,7 +188,8 @@ int algorithm(TParams* params, TGraph* graph, int vertex_out_count, TVertex** ve
       // cycle
       if(graph->vertex_count == vertex_out_count) {
 
-         fprintf(stderr, "DEBUG: Vertex %s. Hamilton path or circle found.\n", vertex->name);
+         if(params->show_debug_messages)
+            fprintf(stderr, "DEBUG: Vertex %s. Hamilton path or circle found.\n", vertex->name);
 
          for(int j = 0; j < graph->vertex_count - 1; j++) {
             printf("%s %s\n", vertex_out[j]->name, vertex_out[j + 1]->name);
@@ -185,7 +199,9 @@ int algorithm(TParams* params, TGraph* graph, int vertex_out_count, TVertex** ve
       } else { 
          // path
 
-         fprintf(stderr, "DEBUG: Vertex %s. Hamilton path or circle found.\n", vertex->name);
+         if(params->show_debug_messages)
+            fprintf(stderr, "DEBUG: Vertex %s. Hamilton path or circle found.\n", vertex->name);
+
          for(int j = 0; j < graph->vertex_count - 2; j++) {
             printf("%s %s\n", vertex_out[j]->name, vertex_out[j + 1]->name);
          }
@@ -208,20 +224,23 @@ int algorithm(TParams* params, TGraph* graph, int vertex_out_count, TVertex** ve
        //vertex_out_next[vertex_out_count + 1] = NULL;
        for(int i = 0; i < vertex_out_count; i++) {
           vertex_out_next[i] = getVertex(graph, vertex_out[i]->name);
-          fprintf(stderr, "DEBUG: Vertex %s. Init vertex_out %i : %s.\n", vertex->name, i, vertex_out[i]->name);
+
+          if(params->show_debug_messages)
+             fprintf(stderr, "DEBUG: Vertex %s. Init vertex_out %i : %s.\n", vertex->name, i, vertex_out[i]->name);
        }
 
        int vertex_out_count_next = vertex_out_count + 1;
        vertex_out_next[vertex_out_count] = vertex_next;
 
-       fprintf(stderr, "DEBUG: Vertex %s. Next vertex: %s. Run child.\n", vertex->name, vertex_next->name);
+       if(params->show_debug_messages)
+          fprintf(stderr, "DEBUG: Vertex %s. Next vertex: %s. Run child.\n", vertex->name, vertex_next->name);
 
        algorithm(params, graph, vertex_out_count_next, vertex_out_next);
     }
   }
 
-  fprintf(stderr, "DEBUG: Vertex %s. End.\n", vertex->name);
-
+  if(params->show_debug_messages)
+     fprintf(stderr, "DEBUG: Vertex %s. End.\n", vertex->name);
 
   // clean
   free(vertex_out);

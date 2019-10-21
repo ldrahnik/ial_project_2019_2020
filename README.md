@@ -26,14 +26,11 @@
       
 # Ukázka spuštění (manuálně z příkazové řádky)
 
-- `./hpac 'A B '$'\n'' B D '$'\n'' D E' -s A -e E`
-- `./hpac 'A B '$'\n'' B D '$'\n'' D E' -s A -e E 2> /dev/null` # bez debugovacích zpráv posílaných na stderr
+- `./hpac 'A B '$'\n'' B D '$'\n'' D E' -s A -e E` # inline zápis malého grafu
+- `./hpac 'A B '$'\n'' B D '$'\n'' D E' -s A -e E -d` # s debugovacími zprávami posílanými na stderr
+- `./hpac ./tests/graphs_in/2.in -e B -s H` # spuštění na grafu načteného ze souboru
 
-# Ukázka spuštění (manuálně ze souboru)
-
-- `./hpac ./tests/graphs_in/2.in -e B -s H`
-
-# Ukázka spuštění (testy)
+# Ukázka spuštění (zautomatizované testy)
 
  - `make test`
 

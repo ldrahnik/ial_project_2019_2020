@@ -50,7 +50,7 @@ TEdge* initEdge();
 int initVertexEdge(TVertex* vertex);
 TGraph getGraph(TParams params);
 int addVertex(TGraph* graph, char* vertex_name);
-int addEdge(TGraph* graph, char* vertex_src_name, char* vertex_dest_name);
+int addEdge(TGraph* graph, char* vertex_src_name, char* vertex_dest_name, int show_debug_messages);
 TEdge* getEdge(TGraph* graph, char* vertex_src, char* vertex_dest);
 TVertex* getVertex(TGraph* graph, char* vertex_name);
 int isVertexValid(TVertex** vertex, int vertex_count, char* vertex_name);

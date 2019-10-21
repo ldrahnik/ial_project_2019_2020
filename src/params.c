@@ -27,6 +27,7 @@ TParams getParams(int argc, char *argv[]) {
  
   // params
   TParams params = {
+    .show_debug_messages = 0,
     .show_help_message = 0,
     .ecode = EOK,
     .input = NULL,
@@ -39,51 +40,55 @@ TParams getParams(int argc, char *argv[]) {
 
   // getopt
   int c;
-  while ((c = getopt(argc, argv, "hs:e:")) != -1) {
+  while ((c = getopt(argc, argv, "hds:e:")) != -1) {
     switch (c) {
       case 'h':
         params.show_help_message = 1;
- 	return params;
+ 	    return params;
+      case 'd':
+        params.show_debug_messages = 1;
+        break;
       case 's':
         if(params.start_vertex != NULL) {
-	   fprintf(stderr, "Option -s is already used.\n");
-           params.ecode = EOPT;
-           return params;	   	
-	}
-	if(strcmp(optarg, "") == 0) {
-	   fprintf(stderr, "Remove option -s, value can not be empty.\n");
-           params.ecode = EOPT;
-           return params;
-	}
-	params.start_vertex = malloc(sizeof(char) * (strlen(optarg) + 1));
-	if(params.start_vertex == NULL) {
-           params.ecode = EALLOC;
-	   fprintf (stderr, "Allocation fails.\n");
-           return params;
-      	}
+	      fprintf(stderr, "Option -s is already used.\n");
+          params.ecode = EOPT;
+          return params;
+	    }
+	    if(strcmp(optarg, "") == 0) {
+	      fprintf(stderr, "Remove option -s, value can not be empty.\n");
+          params.ecode = EOPT;
+          return params;
+	    }
+	    params.start_vertex = malloc(sizeof(char) * (strlen(optarg) + 1));
+	    if(params.start_vertex == NULL) {
+          params.ecode = EALLOC;
+	      fprintf (stderr, "Allocation fails.\n");
+          return params;
+        }
+
         strcpy(params.start_vertex, optarg);
         params.start_vertex[strlen(optarg)] = '\0';
         break;
       case 'e':
         if(params.end_vertex != NULL) {
-	   fprintf(stderr, "Option -e is already used.\n");
-           params.ecode = EOPT;
-           return params;	   	
-	}
-	if(strcmp(optarg, "") == 0) {
-	   fprintf(stderr, "Remove option -e, value can not be empty.\n");
-           params.ecode = EOPT;
-           return params;
-	}
-	params.end_vertex = malloc(sizeof(char) * (strlen(optarg) + 1));
-	if(params.end_vertex == NULL) {
-	   params.ecode = EALLOC;
-	   fprintf (stderr, "Allocation fails.\n");
-           return params;
-      	}
-        strcpy(params.end_vertex, optarg);
-        params.end_vertex[strlen(optarg)] = '\0';
-        break;
+	      fprintf(stderr, "Option -e is already used.\n");
+          params.ecode = EOPT;
+          return params;
+	    }
+	    if(strcmp(optarg, "") == 0) {
+	      fprintf(stderr, "Remove option -e, value can not be empty.\n");
+          params.ecode = EOPT;
+          return params;
+	    }
+	    params.end_vertex = malloc(sizeof(char) * (strlen(optarg) + 1));
+	    if(params.end_vertex == NULL) {
+	      params.ecode = EALLOC;
+	      fprintf (stderr, "Allocation fails.\n");
+            return params;
+      	  }
+          strcpy(params.end_vertex, optarg);
+          params.end_vertex[strlen(optarg)] = '\0';
+          break;
       case '?':
         if(optopt == 's' || optopt == 'e') {
           fprintf(stderr, "Option -%c requires an argument.\n", optopt);
@@ -94,7 +99,6 @@ TParams getParams(int argc, char *argv[]) {
         }
         params.ecode = EOPT;
         return params;
-        break;
       default:
         fprintf(stderr, "Options error.\n");
         params.ecode = EOPT;

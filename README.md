@@ -26,11 +26,19 @@
       
 # Ukázka spuštění (manuálně z příkazové řádky)
 
+- `./hpac -h` # nápověda
 - `./hpac 'A B '$'\n'' B D '$'\n'' D E' -s A -e E` # inline zápis malého grafu
-- `./hpac 'A B '$'\n'' B D '$'\n'' D E' -s A -e E -d` # s debugovacími zprávami posílanými na stderr
 - `./hpac ./tests/graphs_in/2.in -e B -s H` # spuštění na grafu načteného ze souboru
+- `./hpac ./tests/graphs_in/2.in -e B -s H -d -i` # s debugovacími zprávami posílanými na stderr [ -d] a informacemi o algoritmu po provedení (např. počet rekurzivního zavolání) [ -i]
 
 # Ukázka spuštění (zautomatizované testy)
 
- - `make test`
+ - `make test` # provedení všech testů na předpřipravených grafech viz. `Automatizované testy`
 
+# Zautomatizované testy
+
+- Jeden vstupní graf odpovídá jednomu vstupnímu souboru ve složce `tests/graphs_in`.
+- Každý soubor ve složce `tests/params_in` odpovídá jednomu grafu a obsahuje oděleně po řádcích různé sady spouštěcích parametrů.
+- Referenční výstup je ve složce `tests/ref_paths_out`. V referenčním výstupu se vždy nachází právě jedna Hamiltonova cesta / cyklus. Pokud se nachází i ve výstupu programu, test prošel.
+- Příkazem `make test` v kořenovém adresáři dojde ke spuštění programu se všemi dostupnými grafy (`tests/graphs_in`) a postupně se všemi jejich parametry (`tests/params_in`) a uložení jejich výstupu do `tests/output`.
+- Pokud je očekávaný návratový kód u dané varianty grafu (tedy např. graf 1 s 2. sadou parametrů -> 1.2) různý od nuly, je vytvořen referenční soubor s návratovým kódem ve složce (`./tests/ref_paths_out`) ve tvaru `graf.číslo_řádku_s_parametry.rc` (tedy např. `1.2.rc`), kde obsahem souboru bude na prvním řádku očekávaný návratový kód.

@@ -41,7 +41,7 @@ rmzip:
 
 ################### DOC ############################
 
-tex:
+doc:
 	cd doc && make doc
 
 ################# TESTS ############################
@@ -49,7 +49,7 @@ tex:
 test: $(P_NAME)
 	bash ./tests/tests.sh $(PWD)/$(P_NAME)
 
-################# CLEAN ############################
+################# CLEAN #############################
 
 clean:
 	# clean test temporary folders

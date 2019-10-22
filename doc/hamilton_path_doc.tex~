@@ -1,0 +1,79 @@
+\documentclass[a4paper,11pt]{article}
+
+\usepackage[left=20mm, text={170mm, 240mm}, top=30mm]{geometry}
+\usepackage[czech]{babel}
+\usepackage[IL2]{fontenc}
+\usepackage[utf8x]{inputenc}
+\usepackage{enumitem}
+\usepackage{scrextend}
+\usepackage{lscape}
+\usepackage{times}
+\usepackage{graphicx}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{indentfirst}
+\usepackage{pgfplots}
+\usepackage{mathtools}
+\usepackage{amsfonts}
+\usepackage{amsthm}
+
+\setlength{\parskip}{1em}
+\pgfplotsset{compat=1.15}
+
+\begin{document}
+
+\begin{titlepage}
+
+	\begin{center}
+		{\Huge\textsc{Vysoké učení technické v~Brně}}\\
+		\medskip
+		{\huge\textsc{Fakulta informačních technologií}}\\
+		\vspace{\stretch{0.382}}
+		{\huge Hamiltonova cesta a cyklus v grafu}\\
+		\medskip
+		{\LARGE IAL: Náhradní projekt}\\
+		\vspace{\stretch{0.618}}
+	\end{center}
+
+	\Large {\hfill Brno, \today}
+
+\end{titlepage}
+
+\section{Úvod}
+
+test citate \cite{test_citate}
+
+\begin{table}[h]
+	\centering
+	\begin{tabular}{|l|l|c|c|c|}
+		\hline
+		  & Graf & Počet vrcholů & Počet hran & Počet prozkoumaných vrcholů \\ \hline
+		1 & 3v.in & 3 & 3 & \textbf{5} \\ \hline
+		2 & 4v.in & 4 & 6 & \textbf{16} \\ \hline
+		3 & 5v.in & 5 & 10 & \textbf{65} \\ \hline
+		4 & 6v.in & 6 & 15 & \textbf{326} \\ \hline
+		5 & 7v.in & 7 & 21 & \textbf{1 957} \\ \hline
+		6 & 8v.in & 8 & 28 & \textbf{13 700} \\ \hline
+		7 & 9v.in & 9 & 36 & \textbf{109 601} \\ \hline
+		8 & 10v.in & 10 & 45 & \textbf{986 410} \\ \hline
+	\end{tabular}
+	\caption{Brute force metoda}
+	\label{tab:max}
+\end{table}
+
+\begin{tikzpicture}
+  \begin{axis}[ 
+    xlabel=$x$,
+    ylabel={$f(x) = x^2 - x +4$}
+  ] 
+    \addplot {x^2 - x +4}; 
+  \end{axis}
+\end{tikzpicture}
+
+\newpage
+
+\bibliographystyle{czechiso}
+
+\bibliography{bibliography}
+
+\end{document}

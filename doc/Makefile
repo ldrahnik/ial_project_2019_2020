@@ -1,6 +1,6 @@
-file=dokumentace
+file=hamilton_path_doc
 
-pdf:
+doc:
 	latex ${file}.tex
 	bibtex ${file}
 	latex ${file}.tex
@@ -9,7 +9,9 @@ pdf:
 	ps2pdf -sPAPERSIZE=a4 ${file}.ps
 
 clean:
-	rm ${file}.dvi
-	rm ${file}.aux
-	rm ${file}.ps
-	rm ${file}.pdf
+	rm -f *.dvi
+	rm -f *.aux
+	rm -f *.ps
+	rm -f *.bbl
+	rm -f *.blg
+	rm -f *.pdf

@@ -1,0 +1,12 @@
+graph_name	vertices_count	edges_count explored_vertices_count
+3v.in		3				3			5
+4v.in 		4				6			16
+5v.in		5				10			65
+6v.in		6				15			326
+7v.in		7				21			1957
+8v.in		8				28			13700
+9v.in		9				36			109601
+10v.in		10				45			986410
+11v.in      11              55          9864101
+12v.in      12              66          108505112
+13v.in      13              77

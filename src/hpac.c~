@@ -5,16 +5,7 @@
  * Email: <xdrahn00@stud.fit.vutbr.cz>
  * File: hpac.c
  *
- * Assignment:
- *
- * Cestu v grafu, ve které se vyskytuje každý vrchol právě jednou, nazýváme Hamiltonovou cestou. Má-li tato cesta počátek a konec v jednom jediném vrcholu, pak se jedná o Hamiltonův cyklus v grafu. 
- * Vytvořte program pro hledání Hamiltonovy cesty (pro dva zadané vrcholy) a Hamiltonova cyklu v neorientovaném grafu. 
- * Pokud existuje více řešení, nalezněte všechna. Výsledky prezentujte vhodným způsobem. Součástí projektu bude načítání grafů ze souboru a vhodné testovací grafy. V dokumentaci uveďte teoretickou složitost úlohy a porovnejte ji s
- * experimentálními výsledky.
- *
- * Description:
- *
- * This file contains start function called main() which calls methods getParams() from modul Params, method getGraph() from modul Graph etc. 
+ * Description: This file contains start function called main() which calls methods getParams() from modul Params, method getGraph() from modul Graph etc. 
  * Also there is finalized params setting start_vertex, end_vertex (at this moment because when are unset params start_vertex, end_vertex is
  * used first graph vertex)
  * After this is called main algorithm placed in method algorithm() using recursion so calling itself for next each vertex on the way.

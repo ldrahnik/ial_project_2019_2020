@@ -1,0 +1,12 @@
+graph_name	vertices_count	edges_count explored_vertices_count executed_time
+3v.in		3				3			5                       0.008
+4v.in 		4				6			16                      0.009
+5v.in		5				10			65                      0.009
+6v.in		6				15			326                     0.009
+7v.in		7				21			1957                    0.010
+8v.in		8				28			13700                   0.023
+9v.in		9				36			109601                  0.132
+10v.in		10				45			986410                  1.219
+11v.in      11              55          9864101                 14.063
+12v.in      12              66          108505112               187.340
+13v.in      13              77          1104779323              2018.744

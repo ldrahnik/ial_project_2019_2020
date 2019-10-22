@@ -66,18 +66,33 @@ test citate \cite{test_citate}
   columns/vertices_count/.style={column name=Počet vrcholů},
   columns/edges_count/.style={column name=Počet hran},
   columns/explored_vertices_count/.style={column name=Počet prozkoumaných vrcholů},
-]{./../time_coplexity/time_complexity.txt}
+  columns/executed_time/.style={column name=Čas běhu programu [s]},
+]{./../time_coplexity/brute_force_info.txt}
 
 \begin{figure}[h!]
 \centering
 \begin{tikzpicture}
 \begin{axis}[
-    xlabel={Počet vrcholů},
+    xlabel={Počet vrcholů grafu (hrany každý s každým)},
     ylabel={Počet prozkoumaných vrcholů},
     legend pos=north west,
-    legend entries={},
+    legend entries={Brute force algoritmus},
 ]
-\addplot table [x=vertices_count,y=explored_vertices_count] {./../time_coplexity/time_complexity.txt};
+\addplot table [x=vertices_count,y=explored_vertices_count] {./../time_coplexity/brute_force_info.txt};
+\end{axis}
+\end{tikzpicture}
+\end{figure}
+
+\begin{figure}[h!]
+\centering
+\begin{tikzpicture}
+\begin{axis}[
+    xlabel={Počet vrcholů grafu (hrany každý s každým)},
+    ylabel={Čas běhu programu [s]},
+    legend pos=north west,
+    legend entries={Brute force algoritmus},
+]
+\addplot table [x=vertices_count,y=executed_time] {./../time_coplexity/brute_force_info.txt};
 \end{axis}
 \end{tikzpicture}
 \end{figure}

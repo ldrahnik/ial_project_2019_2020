@@ -7,7 +7,7 @@
 
 # Ukázka spuštění (zautomatizované testy)
 
- - `make test` # provedení všech testů na předpřipravených grafech viz. `Automatizované testy`
+ - `make test` # provedení všech testů s předpřipravenými grafy
 
 # Zautomatizované testy
 

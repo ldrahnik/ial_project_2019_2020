@@ -1,10 +1,11 @@
 #!/bin/bash
 
-#
 # Name: Drahník Lukáš
 # Project: IAL: náhradní projekt: 2. Hamiltonova cesta a cyklus v grafu
-# Date: 20.10.2019
-# Email: <xdrahn00@stud.fit.vutbr.cz>
+# Date: 14.11.2018 - <xlanic04@stud.fit.vutbr.cz>, <xdrahn00@stud.fit.vutbr.cz>
+#       20.10.2019 - xdrahn00@stud.fit.vutbr.cz>
+# Email: <xlanic04@stud.fit.vutbr.cz>, <xdrahn00@stud.fit.vutbr.cz>
+#
 # Description: Bash script to run the program with different graphs and parameters to test its functionality
 
 OUTPUT_DIR=./tests/output
@@ -34,10 +35,10 @@ for graph in "$INPUT_DIR"/*.in; do
         hpath_output="$graph_no"."$param_row"
         hpath_output_path="$OUTPUT_DIR"/"$hpath_output"".out"
         hpath_ref_output_path="$REF_OUTPUT_DIR"/"$hpath_output"".out"
-        $1 $params $graph > "$hpath_output_path" 2> /dev/null
+        stderr=$(($1 $params $graph > "$hpath_output_path") 2>&1)
         ret_code=$?
         rc_file="$REF_OUTPUT_DIR"/"$hpath_output"".rc"
-        
+
         if [ -f $rc_file ]; then
             ref_rc=$(head -n 1 $rc_file)
         else
@@ -77,21 +78,23 @@ for graph in "$INPUT_DIR"/*.in; do
             # Just uncomment the first line and comment the next one if you do not want the diff data to be displayed in the command line as well
             #diff "$hpath_output_path" "$REF_OUTPUT_DIR"/"$hpath_output"".out" > "$DIFF_DIR"/"$hpath_output"".diff"
             #diff "$hpath_output_path" "$REF_OUTPUT_DIR"/"$hpath_output"".out" | tee "$DIFF_DIR"/"$hpath_output"".diff"
-        else
-            echo -e "\tERROR: No reference output found for the test $hpath_output! Params: $params"
-            continue
+        else 
+            if [ $ref_rc == 0 ]; then
+                echo -e "\tERROR: No reference output found for the test $hpath_output! Params: $params"
+                continue
+            fi
         fi
         if [ $match -eq 1 ] && [ $ret_code -eq $ref_rc ]; then
-            echo "*** TEST "$hpath_output" ***PASSED***! Launch params: $params"
+            echo "*** TEST "$hpath_output" ***PASSED***! Launch params: $params, Expected return error code: $ref_rc"
         elif [ $match -eq 1 ]; then
-            echo "TEST "$hpath_output" PASSED with unexpected return codes (exp/real): $ref_rc/$ret_code. Launch params: $params"
+            echo "TEST "$hpath_output" FAILED! Launch params: $params, Expected return error code: $ref_rc, Given return error code: $ret_code, Given error code message: $stderr"
         elif [ $match -eq 0 ]; then
-            echo "TEST "$hpath_output" FAILED! Launch params: $params"
+            echo "TEST "$hpath_output" FAILED! Launch params: $params, Expected return error code: $ref_rc, Given return error code: $ret_code"
         #elif [ ${PIPESTATUS[0]} -eq 1 ]; then
          #   echo "*** TEST "$hpath_output" FAILED because of unexpected return code! Params: $params, return codes (exp/real): $ref_rc/$ret_code"
         #elif [ ${PIPESTATUS[0]} -gt 1 ]; then
         #    echo "*** TEST "$hpath_output" DIFF ERROR!"
         fi
-    
+
     done < "$param_f"
 done

@@ -370,4 +370,4 @@ void cleanGraph(TGraph graph) {
       free(graph.vertex[i]);
    }
    free(graph.vertex);
-}
+}   

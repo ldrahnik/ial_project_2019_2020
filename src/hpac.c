@@ -19,14 +19,13 @@ int algorithm_calls_count = 0;
 
 const char *HELP_MSG = {
   "HPAC - Hamilton paths and cirtuits\n\n"
-  "Description ..\n\n"
   "Example of usage:\n\n"
-  "./hpac <file-name> [-s <start>] [-e <end>]\n\n"
+  "./hpac <inline graph|file contains graph> [-s <start>] [-e <end>] [-d] [-i]\n\n"
   "Options:\n"
-  "-s start vertex [ OPTIONAL ], default start vertex is first vertex in file\n"
-  "-e end vertex [ OPTIONAL ], default end vertex is first vertex in file\n"
+  "-s start vertex [ OPTIONAL ], default is first vertex in file\n"
+  "-e end vertex [ OPTIONAL ], default is first vertex in file\n"
   "-d debug [ OPTIONAL ], show debug messages\n"
-  "-i info [ OPTIONAL ], show statistics info of algorithm at the end\n"
+  "-i info [ OPTIONAL ], show info about executed algorithm\n"
 };
 
 /* clean params structures and graph structures */

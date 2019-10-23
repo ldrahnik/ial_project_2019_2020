@@ -89,13 +89,6 @@ K ověření zda lze v grafu nalézt Hamiltonovu cestu a cyklus stačí splněn�
 
 Algoritmus začíná prohledávat graf na počátečním vrcholu. Počáteční vrchol může být zadaný uživatelem případně je vybrán první vrchol. Algoritmus pro počáteční bod nalezne všechny následující hrany a rekurzivně se zavolá pro vrcholy ke kterým jednotlivé hrany vedou. Nezavolá se rekurzivně a algoritmus pro konkrétní variantu cesty skončí neúspěchem pouze v případě pokud byl vrchol na této konkrétní variantě cesty již prozkoumán. Tento algoritmus je dále označován jako Brute force, protože neobsahuje žádnou optimalizaci.
 
-\section{Teoretická časová složitost}
-
-\section{Experimentální ověření časové složitosti}
-
-K získání ...
-
-
 test citate \cite{test_citate}
 
 \pgfplotstabletypeset[

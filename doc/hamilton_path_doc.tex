@@ -64,7 +64,7 @@ Pokud existuje více řešení, nalezněte všechna. Výsledky prezentujte vhodn
 
 \section{Vstupní podmínky}
 
-Předpoklady se snaží předejít zbytečnému prohledávání grafu algoritmicky. 
+Předpoklady se snaží předejít zbytečnému prohledávání grafu algoritmicky.
 
 \subsection{Základní}
 
@@ -77,12 +77,12 @@ Není možné v grafu nalézt Hamiltonovu cestu a cyklus pokud nejsou splněna n
 
 \subsection{Rozšířené}
 
-K ověření zda lze v grafu nalézt Hamiltonovu cestu a cyklus stačí splnění některé z následujících podmínek:
+K ověření zda lze v grafu nalézt Hamiltonovu cestu a cyklus stačí splnění některé z následujících podmínek. Nesplnění žádné z nich nemusí znamenat, že graf Hamiltonovu cestu nebo cyklus neobsahuje.
 
 \begin{enumerate}
     \item Diracova podmínka - každý uzel má stupeň alespoň ½ celkového počtu uzlů
-    \item Oreho podmínka - každá dvojice uzlů nespojených hranou má součet stupňů alespoň u
-    \item Pósova podmínka - pro každé přirozené číslo k < ½ u je počet uzlů, jejichž stupeň nepřevyšuje k, menší než k
+    \item Oreho podmínka - každá dvojice uzlů nespojených hranou má součet stupňů alespoň jako je celkový počet vrcholů
+    \item Pósova podmínka - pro každé přirozené číslo k < ½ celkého počtu vrcholů je počet uzlů, jejichž stupeň nepřevyšuje k, menší než k
 \end{enumerate}
 
 \section{Algoritmus - Brute force}

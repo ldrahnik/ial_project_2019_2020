@@ -13,12 +13,20 @@
 \usepackage{lmodern}
 \usepackage{indentfirst}
 \usepackage{pgfplots}
+\usepackage{pgfplotstable}
 \usepackage{mathtools}
 \usepackage{amsfonts}
 \usepackage{amsthm}
+\usepackage{booktabs}
 
 \setlength{\parskip}{1em}
 \pgfplotsset{compat=1.15}
+
+\pgfplotstableset{% global config, for example in the preamble
+  every head row/.style={before row=\toprule,after row=\midrule},
+  every last row/.style={after row=\bottomrule},
+  fixed
+}
 
 \begin{document}
 
@@ -29,46 +37,65 @@
 		\medskip
 		{\huge\textsc{Fakulta informačních technologií}}\\
 		\vspace{\stretch{0.382}}
-		{\huge Hamiltonova cesta a cyklus v grafu}\\
+		{\huge 2. Hamiltonova cesta a cyklus v grafu}\\
 		\medskip
-		{\LARGE IAL: Náhradní projekt}\\
+		{\LARGE IAL - Algoritmy: Náhradní projekt - skupinový}\\
 		\vspace{\stretch{0.618}}
 	\end{center}
 
-	\Large {\hfill Brno, \today}
+    \noindent xdrahn00@stud.fit.vutbr.cz \Large {\hfill Brno, \today}
 
 \end{titlepage}
 
 \section{Úvod}
 
+Projekt do
+
+\section{Zadání}
+
+Cestu v grafu, ve které se vyskytuje každý vrchol právě jednou, nazýváme Hamiltonovou cestou. Má-li tato cesta počátek a konec v jednom jediném vrcholu, pak se jedná o Hamiltonův cyklus v grafu. 
+
+Vytvořte program pro hledání Hamiltonovy cesty (pro dva zadané vrcholy) a Hamiltonova cyklu v neorientovaném grafu. 
+
+Pokud existuje více řešení, nalezněte všechna. Výsledky prezentujte vhodným způsobem. Součástí projektu bude načítání grafů ze souboru a vhodné testovací grafy. V dokumentaci uveďte teoretickou složitost úlohy a porovnejte ji s experimentálními výsledky.
+
 test citate \cite{test_citate}
 
-\begin{table}[h]
-	\centering
-	\begin{tabular}{|l|l|c|c|c|}
-		\hline
-		  & Graf & Počet vrcholů & Počet hran & Počet prozkoumaných vrcholů \\ \hline
-		1 & 3v.in & 3 & 3 & \textbf{5} \\ \hline
-		2 & 4v.in & 4 & 6 & \textbf{16} \\ \hline
-		3 & 5v.in & 5 & 10 & \textbf{65} \\ \hline
-		4 & 6v.in & 6 & 15 & \textbf{326} \\ \hline
-		5 & 7v.in & 7 & 21 & \textbf{1 957} \\ \hline
-		6 & 8v.in & 8 & 28 & \textbf{13 700} \\ \hline
-		7 & 9v.in & 9 & 36 & \textbf{109 601} \\ \hline
-		8 & 10v.in & 10 & 45 & \textbf{986 410} \\ \hline
-	\end{tabular}
-	\caption{Brute force metoda}
-	\label{tab:max}
-\end{table}
+\pgfplotstabletypeset[
+  columns/graph_name/.style={string type, column name=Název grafu},
+  columns/vertices_count/.style={column name=Počet vrcholů},
+  columns/edges_count/.style={column name=Počet hran},
+  columns/explored_vertices_count/.style={column name=Počet prozkoumaných vrcholů},
+  columns/executed_time/.style={column name=Čas běhu programu [s]},
+]{./../time_coplexity/brute_force_info.txt}
 
+\begin{figure}[h!]
+\centering
 \begin{tikzpicture}
-  \begin{axis}[ 
-    xlabel=$x$,
-    ylabel={$f(x) = x^2 - x +4$}
-  ] 
-    \addplot {x^2 - x +4}; 
-  \end{axis}
+\begin{axis}[
+    xlabel={Počet vrcholů grafu (hrany každý s každým)},
+    ylabel={Počet prozkoumaných vrcholů},
+    legend pos=north west,
+    legend entries={Brute force algoritmus},
+]
+\addplot table [x=vertices_count,y=explored_vertices_count] {./../time_coplexity/brute_force_info.txt};
+\end{axis}
 \end{tikzpicture}
+\end{figure}
+
+\begin{figure}[h!]
+\centering
+\begin{tikzpicture}
+\begin{axis}[
+    xlabel={Počet vrcholů grafu (hrany každý s každým)},
+    ylabel={Čas běhu programu [s]},
+    legend pos=north west,
+    legend entries={Brute force algoritmus},
+]
+\addplot table [x=vertices_count,y=executed_time] {./../time_coplexity/brute_force_info.txt};
+\end{axis}
+\end{tikzpicture}
+\end{figure}
 
 \newpage
 

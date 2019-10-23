@@ -27,7 +27,7 @@
 int algorithm_calls_count = 0;
 
 const char *HELP_MSG = {
-  "HPAC - Hamilton paths and cirtuits\n\n"	
+  "HPAC - Hamilton paths and cirtuits\n\n"
   "Example of usage:\n\n"
   "./hpac <inline graph|file contains graph> [-s <start>] [-e <end>] [-d] [-i]\n\n"
   "Options:\n"
@@ -171,10 +171,7 @@ int main(int argc, char *argv[]) {
   return ecode;
 }
 
-/* 
- * algorithm - finding Hamilton path and circle using brute force method
- * vertex_out - is array of vertices contains already visited vertices 
-*/
+/* algorithm - finding Hamilton path and circle using brute force method */
 int algorithm(TParams* params, TGraph* graph, int vertex_out_count, TVertex** vertex_out) {
 
   algorithm_calls_count++;

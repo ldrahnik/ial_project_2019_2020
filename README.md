@@ -17,7 +17,7 @@
 - Příkazem `make test` v kořenovém adresáři dojde ke spuštění programu se všemi dostupnými grafy (`tests/graphs_in`) a postupně se všemi jejich parametry (`tests/params_in`) a uložení jejich výstupu do `tests/output`.
 - Pokud je očekávaný návratový kód u testovací varianty grafu (tedy např. graf 1 s 2. sadou parametrů -> 1.2) různý od nuly, je vytvořen referenční soubor s návratovým kódem ve složce (`./tests/ref_paths_out`) ve tvaru `graf.číslo_řádku_sady_parametrů.rc` (tedy např. `1.2.rc` kde se použije sada parametrů z druhého řádku) a s obsahem souboru bude na prvním řádku očekávaný návratový kód.
 
-# Ukázka vygenerování obrázků s grafy pomocí knihovny (graphviz)[https://graphviz.gitlab.io/]
+# Ukázka vygenerování obrázků s grafy pomocí knihovny [graphviz](https://graphviz.gitlab.io/)
 
 Převedení vstupního souboru programu s grafem `*.in` pomocí jednoduchého python scriptu na požadovaný formát `.dot` (graph description language) a poté jeho převedení na obrázek `*.png`.
 

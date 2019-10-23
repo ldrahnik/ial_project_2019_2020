@@ -76,7 +76,7 @@ TGraph getGraph(TParams params) {
 /* means, whether is there any(!) possibility find a hamilton paths or hamilton cirtuit */
 int isValidGraph(TGraph* graph, TParams* params) {
 
-    // graph has atleast 3 vertices (base condition)
+    // graph has atleast 2 vertices (base condition)
     if(graph->vertex_count < 3) {
         fprintf (stderr, "Graph validation fails. Add more vertices.\n");
         return 0;
@@ -100,13 +100,14 @@ int isValidGraph(TGraph* graph, TParams* params) {
 
     }
 
-    // every vertex has the same edge's count as 1/2 of total vertices count or more (Dirac condition)
+    // every vertex has more or the same edge's than 1/2 of all vertex (Dirac condition)
     int is_dirac_condition_fulfilled = 1;
     float graph_half_vertex_count = graph->vertex_count / 2;
     for(int i = 0; i < graph->vertex_count; i++) {
         if(graph->vertex[i]->edge_count < graph_half_vertex_count)
             is_dirac_condition_fulfilled = 0;
     }
+
 
     if(params->show_debug_messages)
       fprintf (stderr, "DEBUG: Diract condition: %i.\n", is_dirac_condition_fulfilled);

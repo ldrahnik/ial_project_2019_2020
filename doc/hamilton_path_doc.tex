@@ -33,6 +33,9 @@
 \begin{titlepage}
 
 	\begin{center}
+
+        \includegraphics[width=4.1cm,keepaspectratio,trim={1.2cm 1.2cm 1.2cm 1.2cm},clip]{template-fig/VUT_symbol_barevne_CMYK_CZ}%symbol VUT
+
 		{\Huge\textsc{Vysoké učení technické v~Brně}}\\
 		\medskip
 		{\huge\textsc{Fakulta informačních technologií}}\\
@@ -47,10 +50,6 @@
 
 \end{titlepage}
 
-\section{Úvod}
-
-Projekt do
-
 \section{Zadání}
 
 Cestu v grafu, ve které se vyskytuje každý vrchol právě jednou, nazýváme Hamiltonovou cestou. Má-li tato cesta počátek a konec v jednom jediném vrcholu, pak se jedná o Hamiltonův cyklus v grafu. 
@@ -58,6 +57,29 @@ Cestu v grafu, ve které se vyskytuje každý vrchol právě jednou, nazýváme 
 Vytvořte program pro hledání Hamiltonovy cesty (pro dva zadané vrcholy) a Hamiltonova cyklu v neorientovaném grafu. 
 
 Pokud existuje více řešení, nalezněte všechna. Výsledky prezentujte vhodným způsobem. Součástí projektu bude načítání grafů ze souboru a vhodné testovací grafy. V dokumentaci uveďte teoretickou složitost úlohy a porovnejte ji s experimentálními výsledky.
+
+\section{Úvod}
+
+
+
+\section{Vstupní podmínky}
+
+Předpoklady se snaží předejít zbytečnému prohledávání grafu algoritmicky. 
+
+\subsection{Základní}
+
+Pokud nejsou splněna následující pravidla, není možné v grafu nalézt Hamiltonovu cestu a cyklus.
+
+1. počet uzlů v grafu musí být větší než 2
+2. graf musí mít minimálně jednu hranu pro každý uzel pro cestu a minimálně 2 pro cyklus
+
+\subsection{Rozšířené}
+
+K ověření zda lze v grafu nalézt Hamiltonovu cestu a cyklus stačí splnění některé z následujících podmínek.
+
+1. Diracova podmínka - každý uzel má stupeň alespoň ½ celkového počtu uzlů
+2. Oreho podmínka - každá dvojice uzlů nespojených hranou má součet stupňů alespoň u.
+3. Pósova podmínka - pro každé přirozené číslo k < ½ u je počet uzlů, jejichž stupeň nepřevyšuje k, menší než k.
 
 \section{Algoritmus - Brute force}
 

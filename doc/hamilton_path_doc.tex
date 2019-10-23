@@ -68,18 +68,22 @@ Předpoklady se snaží předejít zbytečnému prohledávání grafu algoritmic
 
 \subsection{Základní}
 
-Pokud nejsou splněna následující pravidla, není možné v grafu nalézt Hamiltonovu cestu a cyklus.
-
-1. počet uzlů v grafu musí být větší než 2
-2. graf musí mít minimálně jednu hranu pro každý uzel pro cestu a minimálně 2 pro cyklus
+Není možné v grafu nalézt Hamiltonovu cestu a cyklus pokud nejsou splněna následující pravidla:
+\begin{enumerate}
+	\item Počet uzlů v grafu musí být větší než 2
+	\item Graf musí mít minimálně stupeň 1 pro každý uzel pro nalezení Hamiltonovi cesty
+    \item Graf musí mít pro každý uzel minimálně stupeň 2 pro každý uzel pro nalezení Hamiltonova cyklu
+\end{enumerate}
 
 \subsection{Rozšířené}
 
-K ověření zda lze v grafu nalézt Hamiltonovu cestu a cyklus stačí splnění některé z následujících podmínek.
+K ověření zda lze v grafu nalézt Hamiltonovu cestu a cyklus stačí splnění některé z následujících podmínek:
 
-1. Diracova podmínka - každý uzel má stupeň alespoň ½ celkového počtu uzlů
-2. Oreho podmínka - každá dvojice uzlů nespojených hranou má součet stupňů alespoň u.
-3. Pósova podmínka - pro každé přirozené číslo k < ½ u je počet uzlů, jejichž stupeň nepřevyšuje k, menší než k.
+\begin{enumerate}
+    \item Diracova podmínka - každý uzel má stupeň alespoň ½ celkového počtu uzlů
+    \item Oreho podmínka - každá dvojice uzlů nespojených hranou má součet stupňů alespoň u
+    \item Pósova podmínka - pro každé přirozené číslo k < ½ u je počet uzlů, jejichž stupeň nepřevyšuje k, menší než k
+\end{enumerate}
 
 \section{Algoritmus - Brute force}
 
@@ -102,7 +106,7 @@ test citate \cite{test_citate}
     xlabel={Počet vrcholů grafu (hrany každý s každým)},
     ylabel={Počet prozkoumaných vrcholů},
     legend pos=north west,
-    legend entries={Brute force algoritmus},
+    legend entries={Algoritmus - Brute force},
 ]
 \addplot table [x=vertices_count,y=explored_vertices_count] {./../time_coplexity/brute_force_info.txt};
 \end{axis}
@@ -116,7 +120,7 @@ test citate \cite{test_citate}
     xlabel={Počet vrcholů grafu (hrany každý s každým)},
     ylabel={Čas běhu programu [s]},
     legend pos=north west,
-    legend entries={Brute force algoritmus},
+    legend entries={Algoritmus - Brute force},
 ]
 \addplot table [x=vertices_count,y=executed_time] {./../time_coplexity/brute_force_info.txt};
 \end{axis}

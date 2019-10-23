@@ -15,7 +15,7 @@ enum ecodes {
   EALLOC = 2, // allocation problem
   EFILE = 3, // problem with opening file (function fseek, ..)
   VERTEX_IS_NOT_VALID = 4, // start/end vertex is not found
-  EGRAPH = 5, // graph has no vertices etc.
+  EGRAPH = 5, // graph not passed thought validation conditions
   EFILE_FORMAT = 6, // for example 2 vertices on a line etc. (delimeter can be space, semicolon, comma)
 };
 

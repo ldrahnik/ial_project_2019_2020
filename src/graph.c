@@ -141,11 +141,11 @@ int isValidGraph(TGraph* graph, TParams* params) {
        fprintf (stderr, "DEBUG: Posova condition: %i.\n", is_posova_condition_fulfilled);
 
     // TODO: conditions failed on test example where path exist .0, .1 (0,0,0) so its not enough have atleast 1 condition
-    /*if(is_dirac_condition_fulfilled || is_ore_condition_fulfilled || is_posova_condition_fulfilled) {
+    if(is_dirac_condition_fulfilled || is_ore_condition_fulfilled || is_posova_condition_fulfilled) {
         return 1;
-    }*/
+    }
 
-    return 1;
+    return 0;
 }
 
 /* init edge */

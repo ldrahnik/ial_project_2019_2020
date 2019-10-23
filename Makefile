@@ -13,7 +13,7 @@ P_DOC_MAKEFILE = doc/Makefile
 P_SOURCES = src/*.c
 P_HEADERS = src/*.h
 P_TESTS = tests/tests.sh tests/ref_paths_out/* tests/params_in/* tests/graphs_in/* 
-P_TIME_COMPLEXITY = time_coplexity/*
+P_TIME_COMPLEXITY = time_complexity/*
 P_GRAPHVIZ = graphviz/*
 
 ################# FLAGS ###########################

@@ -60,13 +60,13 @@ Pokud existuje více řešení, nalezněte všechna. Výsledky prezentujte vhodn
 
 \section{Úvod}
 
-
+Dokumentace popisuje implementaci a návrh řešení k zadání č. 2 Hamiltonova cesta a cyklus v grafu (přesná kopie zadání se nachází výše).
 
 \section{Vstupní podmínky}
 
-Předpoklady se snaží předejít zbytečnému prohledávání grafu algoritmicky.
+V kontrolování předpokladů splnitelnosti je snaha předejít zbytečnému prohledávání grafu algoritmicky. Základní vstupní podmínky jsou takto v programu naimplementovány, rozšířené vstupní podmínky slouží pouze jako informační při zapnutém `debug` přepínači. 
 
-\subsection{Základní}
+\subsection{Základní vstupní podmínky}
 
 Není možné v grafu nalézt Hamiltonovu cestu a cyklus pokud nejsou splněna následující pravidla:
 \begin{enumerate}
@@ -75,28 +75,28 @@ Není možné v grafu nalézt Hamiltonovu cestu a cyklus pokud nejsou splněna n
     \item Graf musí mít pro každý uzel minimálně stupeň 2 pro každý uzel pro nalezení Hamiltonova cyklu
 \end{enumerate}
 
-\subsection{Rozšířené}
+\subsection{Rozšířené vstupní podmínky}
 
-K ověření zda lze v grafu nalézt Hamiltonovu cestu a cyklus stačí splnění některé z následujících podmínek. Nesplnění žádné z nich nemusí znamenat, že graf Hamiltonovu cestu nebo cyklus neobsahuje.
-
+K ověření zda lze v grafu nalézt Hamiltonovu cestu a cyklus stačí splnění některé z následujících podmínek. Nesplnění žádné z nich nutně nemusí znamenat, že graf Hamiltonovu cestu nebo cyklus neobsahuje.
 \begin{enumerate}
     \item Diracova podmínka - každý uzel má stupeň alespoň ½ celkového počtu uzlů
     \item Oreho podmínka - každá dvojice uzlů nespojených hranou má součet stupňů alespoň jako je celkový počet vrcholů
-    \item Pósova podmínka - pro každé přirozené číslo k < ½ celkého počtu vrcholů je počet uzlů, jejichž stupeň nepřevyšuje k, menší než k
+    \item Pósova podmínka - pro každé přirozené číslo k < ½ celkého počtu vrcholů existuje počet uzlů, jejichž stupeň nepřevyšuje k, menší než k
 \end{enumerate}
 
 \section{Algoritmus - Brute force}
 
-Algoritmus začíná prohledávat graf na počátečním vrcholu. Počáteční vrchol může být zadaný uživatelem případně je vybrán první vrchol. Algoritmus pro počáteční bod nalezne všechny následující hrany a rekurzivně se zavolá pro vrcholy ke kterým jednotlivé hrany vedou. Nezavolá se rekurzivně a algoritmus pro konkrétní variantu cesty skončí neúspěchem pouze v případě pokud byl vrchol na této konkrétní variantě cesty již prozkoumán. Tento algoritmus je dále označován jako Brute force, protože neobsahuje žádnou optimalizaci.
+Algoritmus začíná prohledávat graf na počátečním vrcholu. Počáteční vrchol může být zadaný uživatelem. Algoritmus pro počáteční bod projde všechny jeho hrany a rekurzivně se zavolá pro vrcholy ke kterým jednotlivé hrany vedou. Nezavolá se rekurzivně a algoritmus pro konkrétní variantu cesty skončí neúspěchem pouze v případě pokud byl vrchol na této konkrétní variantě cesty již prozkoumán nebo při nalezení posledního vrcholu. Poslední vrchol může být také zadaný uživatelem. Bez uvedení vrcholů uživatelem se za první a cílový vrchol vybere vrchol uvedený na prvním řádku zdrojového grafu a hledá se tedy Hamiltonův cyklus. Tento algoritmus je dále označován jako Brute force, protože neobsahuje žádnou optimalizaci.
 
-\section{Teoretická časová složitost}
+\section{Teoretická složitost}
 
-\section{Experimentální ověření časové složitosti}
+\subsection{Teoretická prostorová složitost}
 
-K získání ...
+\subsection{Teoretická časová složitost}
 
+\section{Experimentální ověření složitosti}
 
-test citate \cite{test_citate}
+K naměření dat byly použity grafy s počtem vrcholů od 3 do 13 uvedené ve složce `time\_complexity/graphs`. Všechny tyto grafy obsahují hrany propojující každý vrchol se všemi ostatními.
 
 \pgfplotstabletypeset[
   columns/graph_name/.style={string type, column name=Název grafu},
@@ -104,7 +104,17 @@ test citate \cite{test_citate}
   columns/edges_count/.style={column name=Počet hran},
   columns/explored_vertices_count/.style={column name=Počet prozkoumaných vrcholů},
   columns/executed_time/.style={column name=Čas běhu programu [s]},
-]{./../time_coplexity/brute_force_info.txt}
+]{./../time_complexity/brute_force_info.txt}
+
+\newpage
+
+\begin{figure}
+    \centering
+    \caption{Příklad grafu s 5-ti vrcholy obsahující hrany propojující každý vrchol se všemi ostatními}
+    \includegraphics[width=0.2\textwidth]{./template-fig/5v}
+\end{figure}
+
+\subsection{Experimentální ověření prostorové složitosti}
 
 \begin{figure}[h!]
 \centering
@@ -115,10 +125,14 @@ test citate \cite{test_citate}
     legend pos=north west,
     legend entries={Algoritmus - Brute force},
 ]
-\addplot table [x=vertices_count,y=explored_vertices_count] {./../time_coplexity/brute_force_info.txt};
+\addplot table [x=vertices_count,y=explored_vertices_count] {./../time_complexity/brute_force_info.txt};
 \end{axis}
 \end{tikzpicture}
 \end{figure}
+
+\section{Experimentální ověření časové složitosti}
+
+Časové měření bylo provedeno pomocí linux utility na měření doby běhu scriptů a programů `time`.
 
 \begin{figure}[h!]
 \centering
@@ -129,10 +143,12 @@ test citate \cite{test_citate}
     legend pos=north west,
     legend entries={Algoritmus - Brute force},
 ]
-\addplot table [x=vertices_count,y=executed_time] {./../time_coplexity/brute_force_info.txt};
+\addplot table [x=vertices_count,y=executed_time] {./../time_complexity/brute_force_info.txt};
 \end{axis}
 \end{tikzpicture}
 \end{figure}
+
+test citate \cite{test_citate}
 
 \newpage
 

@@ -22,6 +22,13 @@
 Převedení vstupního souboru programu s grafem `*.in` pomocí jednoduchého python scriptu na požadovaný formát `.dot` (graph description language) a poté jeho převedení na obrázek `*.png`.
 
 ```
-python3 ./graphviz/convert_script.py ./time_coplexity/graphs/5v.in # dojde k vytvoření souboru 5v.dot na stejném místě
-dot -Tpng ./time_coplexity/graphs/5v.dot > ./../time_coplexity/graphs/5v.png
+python3 ./graphviz/convert_script.py ./time_complexity/graphs/5v.in # dojde k vytvoření souboru 5v.dot na stejném místě
+dot -Tpng ./time_complexity/graphs/5v.dot > ./../time_complexity/graphs/5v.png
 ```
+
+TODO:
+#####
+
+- jeden z vygenerovaných obrázků, třeba 5v.png (vypadá zrovna ještě relativně hezky) přidat do dokumentace pro demonstraci každého vrcholu s každým
+- doladit bloky s testováním v dokumentaci
+- dodělat prezentaci na obhajobu

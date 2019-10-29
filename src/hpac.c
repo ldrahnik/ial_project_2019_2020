@@ -86,7 +86,7 @@ int main(int argc, char *argv[]) {
 
   // default value start_vertex
   if(params.start_vertex == NULL) {
-    params.start_vertex = malloc(sizeof(char) * (strlen(graph.vertex[0]->name) + 1));
+    params.start_vertex = malloc(strlen(graph.vertex[0]->name) + 1);
     if(params.start_vertex == NULL) {
        cleanAll(params, graph);
        return EALLOC;
@@ -102,7 +102,7 @@ int main(int argc, char *argv[]) {
 
   // default value end_vertex
   if(params.end_vertex == NULL) {
-    params.end_vertex = malloc(sizeof(char) * (strlen(graph.vertex[0]->name) + 1));
+    params.end_vertex = malloc(strlen(graph.vertex[0]->name) + 1);
     if(params.end_vertex == NULL) {
        cleanAll(params, graph);
        return EALLOC;
@@ -256,7 +256,7 @@ int algorithm(TParams* params, TGraph* graph, int vertex_out_count, TVertex** ve
     if(isVertexValid(vertex_out, vertex_out_count, vertex_next->name) == 0)  {
 
        // arguments
-       TVertex** vertex_out_next = malloc((vertex_out_count + 1) * sizeof(TVertex));
+       TVertex** vertex_out_next = malloc(sizeof(TVertex) * vertex_out_count + 1);
        if(vertex_out_next == NULL) {
           return EALLOC;
        }

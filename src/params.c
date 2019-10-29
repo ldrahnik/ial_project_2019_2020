@@ -62,7 +62,7 @@ TParams getParams(int argc, char *argv[]) {
           params.ecode = EOPT;
           return params;
 	    }
-	    params.start_vertex = malloc(sizeof(char) * (strlen(optarg) + 1));
+	    params.start_vertex = malloc(strlen(optarg) + 1);
 	    if(params.start_vertex == NULL) {
           params.ecode = EALLOC;
 	      fprintf (stderr, "Allocation fails.\n");
@@ -83,7 +83,7 @@ TParams getParams(int argc, char *argv[]) {
           params.ecode = EOPT;
           return params;
 	    }
-	    params.end_vertex = malloc(sizeof(char) * (strlen(optarg) + 1));
+	    params.end_vertex = malloc(strlen(optarg) + 1);
 	    if(params.end_vertex == NULL) {
 	      params.ecode = EALLOC;
 	      fprintf (stderr, "Allocation fails.\n");

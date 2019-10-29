@@ -163,7 +163,7 @@ TEdge* initEdge() {
 int initGraphEdge(TGraph* graph) {
 
    // realloc one more space for pointer to vertex above
-   TEdge** graph_new_edge = realloc(graph->edge, (graph->edge_count + 1) * sizeof(TEdge));
+   TEdge** graph_new_edge = realloc(graph->edge, sizeof(TEdge) * (graph->edge_count + 1));
    if(graph_new_edge == NULL) {
       return EALLOC;
    } else {
@@ -180,7 +180,7 @@ int initGraphEdge(TGraph* graph) {
 int initVertexEdge(TVertex* vertex) {
 
    // realloc one more space for pointer to vertex above
-   TEdge** vertex_new_edge = realloc(vertex->edge, (vertex->edge_count + 1) * sizeof(TEdge));
+   TEdge** vertex_new_edge = realloc(vertex->edge, sizeof(TEdge) * (vertex->edge_count + 1));
    if(vertex_new_edge == NULL) {
         return EALLOC;
    } else {
@@ -256,7 +256,7 @@ TVertex* initVertex(TGraph* graph, char* vertex_name) {
    vertex->ecode = EOK;
    vertex->edge = NULL;
    vertex->edge_count = 0;
-   vertex->name = malloc(sizeof(char) * strlen(vertex_name) + 1);
+   vertex->name = malloc(strlen(vertex_name) + 1);
    if(vertex->name == NULL) {
      vertex->ecode = EALLOC;
      return vertex;
@@ -266,7 +266,7 @@ TVertex* initVertex(TGraph* graph, char* vertex_name) {
    strcpy(vertex->name, vertex_name);
 
    // realloc one more space for pointer to vertex above
-   TVertex** graph_new_vertex = realloc(graph->vertex, (graph->vertex_count + 1) * sizeof(TVertex));
+   TVertex** graph_new_vertex = realloc(graph->vertex, sizeof(TVertex) * (graph->vertex_count + 1));
    if(graph_new_vertex == NULL) {
      vertex->ecode = EALLOC;
      return vertex;

@@ -33,7 +33,7 @@ int results_hamilton_cycle_count = 0;
 const char *HELP_MSG = {
   "HPAC - Hamilton paths and cirtuits\n\n"	
   "Example of usage:\n\n"
-  "./hpac <inline graph|file contains graph> [-s <start>] [-e <end>] [-d] [-i]\n\n"
+  "./hpac [-s <start>] [-e <end>] [-d] [-i] <inline graph|file contains graph>\n\n"
   "Options:\n"
   "-s start vertex [ OPTIONAL ], default is first vertex in file\n"
   "-e end vertex [ OPTIONAL ], default is first vertex in file\n"

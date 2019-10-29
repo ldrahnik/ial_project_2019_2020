@@ -111,7 +111,7 @@ TParams getParams(int argc, char *argv[]) {
 
   // for example catch this case: ./hpac "A B" -s f ggg
   if(argv[optind + 1] != NULL) {
-    fprintf(stderr, "Option error.\n");
+    fprintf(stderr, "Option error. Please use optional options before non-options.\n");
     params.ecode = EOPT;
     return params;
   }

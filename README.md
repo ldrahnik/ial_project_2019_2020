@@ -1,9 +1,9 @@
 # Ukázka spuštění (manuálně z příkazové řádky)
 
 - `./hpac -h` # nápověda
-- `./hpac 'A B '$'\n'' B D '$'\n'' D E' -s A -e E` # inline zápis malého grafu
-- `./hpac ./tests/graphs_in/2.in -e B -s H` # spuštění na grafu načteného ze souboru
-- `./hpac ./tests/graphs_in/2.in -e B -s H -d -i` # s debugovacími zprávami posílanými na stderr [ -d] a informacemi o algoritmu po provedení (např. počet rekurzivního zavolání) [ -i]
+- `./hpac -s A -e E 'A B '$'\n'' B D '$'\n'' D E'` # inline zápis malého grafu
+- `./hpac -e B -s H ./tests/graphs_in/2.in` # spuštění na grafu načteného ze souboru
+- `./hpac -e B -s H -d -i ./tests/graphs_in/2.in` # s debugovacími zprávami posílanými na stderr [ -d] a informacemi o algoritmu po provedení (např. počet rekurzivního zavolání) [ -i]
 
 # Ukázka spuštění (zautomatizované testy)
 

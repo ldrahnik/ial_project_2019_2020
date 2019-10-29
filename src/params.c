@@ -150,7 +150,7 @@ TParams getParams(int argc, char *argv[]) {
     }
     fclose(file);
   } else { // its not a file, its a raw string
-      params.input = malloc(strlen(argv[optind]));
+      params.input = malloc(strlen(argv[optind]) + 1);
       if(params.input == NULL) {
         params.ecode = EALLOC;
 	fprintf (stderr, "Allocation fails.\n");

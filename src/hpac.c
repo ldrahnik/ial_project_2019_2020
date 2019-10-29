@@ -262,10 +262,10 @@ int algorithm(TParams* params, TGraph* graph, int vertex_out_count, TVertex** ve
        }
 
        for(int i = 0; i < vertex_out_count; i++) {
-          vertex_out_next[i] = getVertex(graph, vertex_out[i]->name);
+          vertex_out_next[i] = vertex_out[i];
 
           if(params->show_debug_messages)
-             fprintf(stderr, "DEBUG: Vertex %s. Init vertex_out %i : %s.\n", vertex->name, i, vertex_out[i]->name);
+             fprintf(stderr, "DEBUG: Vertex %s. Init vertex_out_next %i : %s.\n", vertex->name, i, vertex_out_next[i]->name);
        }
 
        int vertex_out_count_next = vertex_out_count + 1;

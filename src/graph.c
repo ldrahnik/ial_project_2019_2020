@@ -65,8 +65,6 @@ TGraph getGraph(TParams params) {
       line = strtok_r(NULL, "\n", &end_line);
    }
 
-   free(line);
-
    if(params.show_debug_messages)
       fprintf(stderr, "\nDEBUG: getGraph():structure successfully ended.\n\n");
 
@@ -364,4 +362,4 @@ void cleanGraph(TGraph graph) {
       free(graph.vertex[i]);
    }
    free(graph.vertex);
-}   
+}

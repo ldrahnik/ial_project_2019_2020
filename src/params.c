@@ -153,7 +153,7 @@ TParams getParams(int argc, char *argv[]) {
       params.input = malloc(strlen(argv[optind]) + 1);
       if(params.input == NULL) {
         params.ecode = EALLOC;
-	fprintf (stderr, "Allocation fails.\n");
+	    fprintf (stderr, "Allocation fails.\n");
         return params;
       }
       strcpy(params.input, argv[optind]);

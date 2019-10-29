@@ -18,6 +18,7 @@
 \usepackage{amsfonts}
 \usepackage{amsthm}
 \usepackage{booktabs}
+\usepackage{longtable}
 
 \setlength{\parskip}{1em}
 \pgfplotsset{compat=1.15}
@@ -34,7 +35,7 @@
 
 	\begin{center}
 
-        \includegraphics[width=4.1cm,keepaspectratio,trim={1.2cm 1.2cm 1.2cm 1.2cm},clip]{template-fig/VUT_symbol_barevne_CMYK_CZ}%symbol VUT
+        \includegraphics[width=4.1cm,keepaspectratio,trim={1.2cm 1.2cm 1.2cm 1.2cm},clip]{./template-fig/VUT_symbol_barevne_CMYK_CZ}%symbol VUT
 
 		{\Huge\textsc{Vysoké učení technické v~Brně}}\\
 		\medskip
@@ -96,15 +97,21 @@ Algoritmus začíná prohledávat graf na počátečním vrcholu. Počáteční 
 
 \section{Experimentální ověření složitosti}
 
-K naměření dat byly použity grafy s počtem vrcholů od 3 do 13 uvedené ve složce `time\_complexity/graphs`. Všechny tyto grafy obsahují hrany propojující každý vrchol se všemi ostatními.
+K naměření dat byly použity grafy s počtem vrcholů od 3 do 13 uvedené ve složce `complexity/graphs`. Všechny tyto grafy obsahují hrany propojující každý vrchol se všemi ostatními.
 
 \pgfplotstabletypeset[
-  columns/graph_name/.style={string type, column name=Název grafu},
-  columns/vertices_count/.style={column name=Počet vrcholů},
-  columns/edges_count/.style={column name=Počet hran},
-  columns/explored_vertices_count/.style={column name=Počet prozkoumaných vrcholů},
-  columns/executed_time/.style={column name=Čas běhu programu [s]},
-]{./../time_complexity/brute_force_info.txt}
+  font={\small},
+  begin table=\begin{longtable},
+  columns/graph/.style={string type, column name=Graf},
+  columns/vertices/.style={column name=Vrcholy},
+  columns/edges/.style={column name=Hrany},
+  columns/explored_vertices/.style={column name=Prozkoumané vrcholy},
+  columns/executed_time/.style={column name=Čas [s]},
+  columns/results/.style={column name=Výsledky},
+  columns/allocs/.style={column name=Alokování},
+  columns/allocated_memory/.style={column name=Alokovaná pamět [byte]},
+  end table=\end{longtable},
+]{./../complexity/brute_force_info.txt}
 
 \newpage
 
@@ -121,11 +128,11 @@ K naměření dat byly použity grafy s počtem vrcholů od 3 do 13 uvedené ve 
 \begin{tikzpicture}
 \begin{axis}[
     xlabel={Počet vrcholů grafu (hrany každý s každým)},
-    ylabel={Počet prozkoumaných vrcholů},
+    ylabel={Velikost alokované paměti [byte]},
     legend pos=north west,
     legend entries={Algoritmus - Brute force},
 ]
-\addplot table [x=vertices_count,y=explored_vertices_count] {./../time_complexity/brute_force_info.txt};
+\addplot table [x=vertices,y=allocated_memory] {./../complexity/brute_force_info.txt};
 \end{axis}
 \end{tikzpicture}
 \end{figure}
@@ -143,12 +150,16 @@ K naměření dat byly použity grafy s počtem vrcholů od 3 do 13 uvedené ve 
     legend pos=north west,
     legend entries={Algoritmus - Brute force},
 ]
-\addplot table [x=vertices_count,y=executed_time] {./../time_complexity/brute_force_info.txt};
+\addplot table [x=vertices,y=executed_time] {./../complexity/brute_force_info.txt};
 \end{axis}
 \end{tikzpicture}
 \end{figure}
 
 test citate \cite{test_citate}
+
+\section{Závěr}
+
+Program byl zkontrolován pomocí programu valgrind. V programu nedochází na žádné úniky paměti. 
 
 \newpage
 

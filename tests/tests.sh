@@ -30,6 +30,7 @@ for graph in "$INPUT_DIR"/*.in; do
     param_f="$PARAMS_DIR"/"$graph_no".par
     par_no=$(basename "$param_f" .par)
     param_row=0
+    match=0
     while read -r params; do
         ((param_row=param_row+1))
         hpath_output="$graph_no"."$param_row"
@@ -46,35 +47,55 @@ for graph in "$INPUT_DIR"/*.in; do
         fi
 
         if [ -f "$hpath_ref_output_path" ]; then
-            match=0
+            ref_result_line_count=0
+            ref_result_line_start=0
+            ref_file_line_index=1
+            ref_file_tmp_line=""
             ref_line_cnt=$(wc -l < "$hpath_ref_output_path")
             while read -r ref_file_line; do # we read in the first line from the reference output file
-                out_line_index=0
-                while read -r output_line; do
-                    out_line_index=$((out_line_index+1))
-                    if [[ "$output_line" == "$ref_file_line" ]]; then # we found a line match
-                        for edge_index in $(seq 1 "$ref_line_cnt"); do # now we are iterating over the next $ref_line_cnt lines to find out if we have a match
-                            ref_file_line_content=$(sed -n "$edge_index"p "$hpath_ref_output_path")
-                            out_file_line_ptr=$((out_line_index + edge_index - 1))
-                            output_file_line_content=$(sed -n "$out_file_line_ptr"p "$hpath_output_path")
-                            if [[ "$ref_file_line_content" != "$output_file_line_content" ]]; then # n-th line does not match, we break from the for loop
-                                match=0
-                                break
-                            fi
-                            if [ $edge_index -eq $ref_line_cnt ]; then
-                                match=1
-                                break
-                            fi
+                out_line_index=1
+                match=0
+
+                if [ -z "$ref_file_line" ]; then
+                    while read -r output_line; do
+
+                       for edge_index in $(seq "$out_line_index" $(($out_line_index + $ref_result_line_count))); do # now we are iterating over lines to find out if we have a match
+                           ref_file_line_ptr=$((ref_result_line_start + edge_index - out_line_index))
+                           ref_file_line_content=$(sed -n "$ref_file_line_ptr"p "$hpath_ref_output_path")
+
+                           out_file_line_ptr=$((out_line_index + edge_index - 1))
+                           output_file_line_content=$(sed -n "$out_file_line_ptr"p "$hpath_output_path")
+
+                           if [[ "$ref_file_line_content" != "$output_file_line_content" ]]; then # n-th line does not match, we break from the for loop
+                               match=0
+                               break
+                           fi
+
+                           if [ $edge_index -eq $(($ref_result_line_count + $out_line_index - 1)) ]; then
+                               match=1
+                               break
+                           fi
                         done
+
+                        if [ $match -eq 1 ]; then
+                            break
+                        fi
+                        ((out_line_index++))
+                    done < "$hpath_output_path"
+
+                    out_line_index=0
+                    ref_result_line_count=0
+                    ref_result_line_start=0
+                else
+                    # remember which ref lines (hamilton cycle, path) we want find in program results
+                    if [ "$ref_result_line_start" -eq 0 ]; then
+                        ref_result_line_start=$ref_file_line_index
                     fi
-                    if [ $match -eq 1 ]; then
-                        break
-                    fi
-                done < "$hpath_output_path"
-                if [ $match -eq 1 ]; then
-                    break
+                    ((ref_result_line_count++))
                 fi
+                ((ref_file_line_index++))
             done < "$hpath_ref_output_path"
+
             # Just uncomment the first line and comment the next one if you do not want the diff data to be displayed in the command line as well
             #diff "$hpath_output_path" "$REF_OUTPUT_DIR"/"$hpath_output"".out" > "$DIFF_DIR"/"$hpath_output"".diff"
             #diff "$hpath_output_path" "$REF_OUTPUT_DIR"/"$hpath_output"".out" | tee "$DIFF_DIR"/"$hpath_output"".diff"

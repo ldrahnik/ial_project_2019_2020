@@ -26,6 +26,10 @@
 /* count of algorithm() calls */
 int algorithm_calls_count = 0;
 
+/* results */
+int results_hamilton_path_count = 0;
+int results_hamilton_cycle_count = 0;
+
 const char *HELP_MSG = {
   "HPAC - Hamilton paths and cirtuits\n\n"	
   "Example of usage:\n\n"
@@ -155,9 +159,19 @@ int main(int argc, char *argv[]) {
 
   algorithm(&params, &graph, 1, vertex_out);
 
+  // results
+  // cycle
+  if(strcmp(params.start_vertex, params.end_vertex) == 0) {
+    printf("Results: %i\n", results_hamilton_cycle_count);
+  } 
+  // path
+  else {
+    printf("Results: %i\n", results_hamilton_path_count);
+  }
+
   // statistics
   if(params.show_info)
-     fprintf(stderr, "STATISTICS: method algorithm() called: %i\n", algorithm_calls_count);
+     fprintf(stderr, "\nSTATISTICS: method algorithm() called: %i\n", algorithm_calls_count);
 
   if(params.show_debug_messages)
     fprintf(stderr, "\nDEBUG: main algorithm successfully ended.\n\n");
@@ -208,25 +222,29 @@ int algorithm(TParams* params, TGraph* graph, int vertex_out_count, TVertex** ve
     if(strcmp(vertex_next->name, params->end_vertex) == 0 && ((graph->vertex_count == vertex_out_count && strcmp(params->start_vertex, params->end_vertex) == 0) || (graph->vertex_count == vertex_out_count + 1 && strcmp(params->start_vertex, params->end_vertex) != 0))) {
 
       // cycle
-      if(graph->vertex_count == vertex_out_count) {
+      if(strcmp(params->start_vertex, params->end_vertex) == 0) {
+         results_hamilton_cycle_count++;
 
          if(params->show_debug_messages)
-            fprintf(stderr, "DEBUG: Vertex %s. Hamilton path or circle found.\n", vertex->name);
+            fprintf(stderr, "DEBUG: Vertex %s. Hamilton cycle found.\n", vertex->name);
 
-         for(int j = 0; j < graph->vertex_count - 1; j++) {
+         for(int j = 0; j < graph->vertex_count - 1; j++)
             printf("%s %s\n", vertex_out[j]->name, vertex_out[j + 1]->name);
-         }
+
          printf("%s %s\n", vertex_out[graph->vertex_count - 1]->name, params->end_vertex);
          printf("\n");
-      } else { 
-         // path
+      }
+
+      // path 
+      else { 
+         results_hamilton_path_count++;
 
          if(params->show_debug_messages)
-            fprintf(stderr, "DEBUG: Vertex %s. Hamilton path or circle found.\n", vertex->name);
+            fprintf(stderr, "DEBUG: Vertex %s. Hamilton path found.\n", vertex->name);
 
-         for(int j = 0; j < graph->vertex_count - 2; j++) {
+         for(int j = 0; j < graph->vertex_count - 2; j++)
             printf("%s %s\n", vertex_out[j]->name, vertex_out[j + 1]->name);
-         }
+
          printf("%s %s\n", vertex_out[graph->vertex_count - 2]->name, params->end_vertex);
          printf("\n");
       }

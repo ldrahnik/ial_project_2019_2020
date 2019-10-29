@@ -13,7 +13,7 @@ P_DOC_MAKEFILE = doc/Makefile
 P_SOURCES = src/*.c
 P_HEADERS = src/*.h
 P_TESTS = tests/tests.sh tests/ref_paths_out/* tests/params_in/* tests/graphs_in/* 
-P_TIME_COMPLEXITY = time_complexity/*
+P_COMPLEXITY = complexity/*
 P_GRAPHVIZ = graphviz/*
 
 ################# FLAGS ###########################
@@ -32,7 +32,7 @@ $(P_NAME): $(P_SOURCES) $(P_HEADERS)
 ################# ARCHIVE #########################
 
 A_NAME = xdrahn00
-A_FILES = Makefile $(P_DOC) $(P_DOC_MAKEFILE) $(P_DOC_MAKEFILE) $(P_SOURCES) $(P_HEADERS) $(P_TESTS) $(P_TIME_COMPLEXITY) $(P_GRAPHVIZ)
+A_FILES = Makefile $(P_DOC) $(P_DOC_MAKEFILE) $(P_DOC_MAKEFILE) $(P_SOURCES) $(P_HEADERS) $(P_TESTS) $(P_COMPLEXITY) $(P_GRAPHVIZ)
 
 zip:
 	zip $(A_NAME).zip $(A_FILES)

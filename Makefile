@@ -7,8 +7,9 @@
 ################# PROJECT #########################
 
 P_NAME = hpac
-P_DOC = doc/hamilton_path_doc.pdf
-P_DOC_SOURCE = doc/hamilton_path_doc.tex
+P_DOC_NAME = hamilton_path_doc
+P_DOC_RESULT = doc/$(P_DOC_NAME).pdf
+P_DOC_SOURCE = doc/$(P_DOC_NAME).tex
 P_DOC_MAKEFILE = doc/Makefile
 P_SOURCES = src/*.c
 P_HEADERS = src/*.h
@@ -32,7 +33,7 @@ $(P_NAME): $(P_SOURCES) $(P_HEADERS)
 ################# ARCHIVE #########################
 
 A_NAME = xdrahn00
-A_FILES = Makefile $(P_DOC) $(P_DOC_MAKEFILE) $(P_SOURCES) $(P_HEADERS) $(P_TESTS) $(P_COMPLEXITY) $(P_GRAPHVIZ)
+A_FILES = Makefile $(P_DOC_RESULT) $(P_DOC_MAKEFILE) $(P_SOURCES) $(P_HEADERS) $(P_TESTS) $(P_COMPLEXITY) $(P_GRAPHVIZ)
 
 zip:
 	zip $(A_NAME).zip $(A_FILES)

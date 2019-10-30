@@ -44,7 +44,7 @@ rmzip:
 ################### DOC ############################
 
 tex:
-	cd doc && make doc
+	cd doc && make doc NAME=$(P_DOC_NAME)
 
 ################# TESTS ############################
 

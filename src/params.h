@@ -10,6 +10,11 @@
 #define _params_H_
 
 #include "string.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <errno.h>
+#include <ctype.h> // isprint
 
 #include "error.h"
 

@@ -21,8 +21,9 @@ TParams getParams(int argc, char *argv[]) {
  
   // params
   TParams params = {
-    .show_debug_messages = 0,
+    .show_info = 0,
     .show_help_message = 0,
+    .show_debug_messages = 0,
     .ecode = EOK,
     .input = NULL,
     .start_vertex = NULL,
@@ -37,12 +38,27 @@ TParams getParams(int argc, char *argv[]) {
   while ((c = getopt(argc, argv, "hids:e:")) != -1) {
     switch (c) {
       case 'i':
+        if(params.show_info) {
+	      fprintf(stderr, "Option -i is already used.\n");
+          params.ecode = EOPT;
+          return params;
+	    }
         params.show_info = 1;
         break;
       case 'h':
+        if(params.show_help_message) {
+	      fprintf(stderr, "Option -h is already used.\n");
+          params.ecode = EOPT;
+          return params;
+	    }
         params.show_help_message = 1;
- 	    return params;
+ 	    break;
       case 'd':
+        if(params.show_debug_messages) {
+	      fprintf(stderr, "Option -d is already used.\n");
+          params.ecode = EOPT;
+          return params;
+	    }
         params.show_debug_messages = 1;
         break;
       case 's':

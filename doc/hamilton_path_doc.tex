@@ -139,18 +139,18 @@ K naměření dat byly použity grafy s počtem vrcholů od 3 do 13 uvedené ve 
 
 \section{Experimentální ověření časové složitosti}
 
-Časové měření bylo provedeno pomocí linux utility na měření doby běhu scriptů a programů `time`.
+K experimentálnímu ověření časové složitosti byly použity hodnoty získané počtem průchodů funkcí algorithm(). 
 
 \begin{figure}[h!]
 \centering
 \begin{tikzpicture}
 \begin{axis}[
     xlabel={Počet vrcholů grafu (hrany každý s každým)},
-    ylabel={Čas běhu programu [s]},
+    ylabel={Počet průchodů funkcí algorithm()},
     legend pos=north west,
     legend entries={Algoritmus - Brute force},
 ]
-\addplot table [x=vertices,y=executed_time] {./../complexity/brute_force_info.txt};
+\addplot table [x=vertices,y=explored_vertices] {./../complexity/brute_force_info.txt};
 \end{axis}
 \end{tikzpicture}
 \end{figure}

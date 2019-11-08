@@ -11,6 +11,7 @@
 
 #include "string.h"
 #include <stdio.h>
+#include <stdint.h>
 #include <stdlib.h>
 #include <unistd.h>
 #include <errno.h>
@@ -19,10 +20,10 @@
 #include "error.h"
 
 typedef struct params {
-  int show_info; // option i
-  int show_debug_messages; // option d
-  int show_help_message; // option h
-  int ecode; // error code
+  uint32_t show_info :1; // option i
+  uint32_t show_debug_messages :1; // option d
+  uint32_t show_help_message :1; // option h
+  uint32_t ecode :3; // error code
   char* start_vertex; // command option s
   char* end_vertex; // command option e
   char* input; // graph

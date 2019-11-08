@@ -279,7 +279,7 @@ int algorithm(TParams* params, TGraph* graph, int vertex_out_count, TVertex** ve
   }
 
   if(params->show_debug_messages)
-     fprintf(stderr, "DEBUG: Vertex %s. End. Total count of method() calls is: %i\n", vertex->name, algorithm_calls_count);
+     fprintf(stderr, "DEBUG: Vertex %s. End.\n", vertex->name);
 
   // clean
   free(vertex_out);

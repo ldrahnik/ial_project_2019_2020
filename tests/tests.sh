@@ -99,7 +99,7 @@ for graph in "$INPUT_DIR"/*.in; do
             # Just uncomment the first line and comment the next one if you do not want the diff data to be displayed in the command line as well
             #diff "$hpath_output_path" "$REF_OUTPUT_DIR"/"$hpath_output"".out" > "$DIFF_DIR"/"$hpath_output"".diff"
             #diff "$hpath_output_path" "$REF_OUTPUT_DIR"/"$hpath_output"".out" | tee "$DIFF_DIR"/"$hpath_output"".diff"
-        else 
+        else
             if [ $ref_rc == 0 ]; then
                 echo -e "\tERROR: No reference output found for the test $hpath_output! Params: $params"
                 continue

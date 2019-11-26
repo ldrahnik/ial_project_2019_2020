@@ -36,6 +36,10 @@ A_NAME = xdrahn00
 A_FILES = Makefile $(P_DOC_RESULT) $(P_DOC_MAKEFILE) $(P_SOURCES) $(P_HEADERS) $(P_TESTS) $(P_COMPLEXITY) $(P_GRAPHVIZ)
 
 zip:
+	# build doc
+	make tex
+	
+	# pack
 	zip $(A_NAME).zip $(A_FILES)
 
 unzip:

@@ -13,6 +13,7 @@ INPUT_DIR=./tests/graphs_in
 REF_OUTPUT_DIR=./tests/ref_paths_out
 PARAMS_DIR=./tests/params_in
 DIFF_DIR=./tests/diff
+EXECUTABLE_BINARY=${1}
 
 if [ -d "$OUTPUT_DIR" ]; then
     rm -r "$OUTPUT_DIR"
@@ -36,7 +37,7 @@ for graph in "$INPUT_DIR"/*.in; do
         hpath_output="$graph_no"."$param_row"
         hpath_output_path="$OUTPUT_DIR"/"$hpath_output"".out"
         hpath_ref_output_path="$REF_OUTPUT_DIR"/"$hpath_output"".out"
-        stderr=$(($1 $params $graph > "$hpath_output_path") 2>&1)
+        stderr=$(($EXECUTABLE_BINARY $params $graph > "$hpath_output_path") 2>&1)
         ret_code=$?
         rc_file="$REF_OUTPUT_DIR"/"$hpath_output"".rc"
 

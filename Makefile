@@ -56,7 +56,7 @@ tex:
 ################# TESTS ############################
 
 test: $(P_NAME)
-	bash ./tests/tests.sh $(PWD)/$(P_NAME)
+	bash ./tests/tests.sh "./$(P_NAME)"
 
 ################# CLEAN ############################
 

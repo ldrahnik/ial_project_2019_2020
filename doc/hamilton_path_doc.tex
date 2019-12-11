@@ -19,6 +19,7 @@
 \usepackage{amsthm}
 \usepackage{booktabs}
 \usepackage{longtable}
+\usepackage{tabto}
 
 \setlength{\parskip}{1em}
 \pgfplotsset{compat=1.15}
@@ -34,7 +35,7 @@
 \begin{titlepage}
 
 	\begin{center}
-
+		
         \includegraphics[width=4.1cm,keepaspectratio,trim={1.2cm 1.2cm 1.2cm 1.2cm},clip]{./template-fig/VUT_symbol_barevne_CMYK_CZ}%symbol VUT
 
 		{\Huge\textsc{Vysoké učení technické v~Brně}}\\
@@ -59,6 +60,7 @@ Vytvořte program pro hledání Hamiltonovy cesty (pro dva zadané vrcholy) a Ha
 
 Pokud existuje více řešení, nalezněte všechna. Výsledky prezentujte vhodným způsobem. Součástí projektu bude načítání grafů ze souboru a vhodné testovací grafy. V dokumentaci uveďte teoretickou složitost úlohy a porovnejte ji s experimentálními výsledky.
 
+
 \section{Úvod}
 
 Dokumentace popisuje implementaci a návrh řešení k zadání č. 2 Hamiltonova cesta a cyklus v grafu (přesná kopie zadání se nachází výše).
@@ -75,29 +77,62 @@ Není možné v grafu nalézt Hamiltonovu cestu a cyklus pokud nejsou splněna n
 	\item Graf musí mít minimálně stupeň 1 pro každý uzel pro nalezení Hamiltonovi cesty
     \item Graf musí mít pro každý uzel minimálně stupeň 2 pro každý uzel pro nalezení Hamiltonova cyklu
 \end{enumerate}
-
+\newpage
 \subsection{Rozšířené vstupní podmínky}
 
 K ověření zda lze v grafu nalézt Hamiltonovu cestu a cyklus stačí splnění některé z následujících podmínek. Nesplnění žádné z nich nutně nemusí znamenat, že graf Hamiltonovu cestu nebo cyklus neobsahuje.
 \begin{enumerate}
-    \item Diracova podmínka - každý uzel má stupeň alespoň ½ celkového počtu uzlů
-    \item Oreho podmínka - každá dvojice uzlů nespojených hranou má součet stupňů alespoň jako je celkový počet vrcholů
-    \item Pósova podmínka - pro každé přirozené číslo k < ½ celkého počtu vrcholů existuje počet uzlů, jejichž stupeň nepřevyšuje k, menší než k
+    \item \textbf{Diracova} podmínka - každý uzel má stupeň alespoň ½ celkového počtu uzlů
+    \item \textbf{Oreho} podmínka - každá dvojice uzlů nespojených hranou má součet stupňů alespoň jako je celkový počet vrcholů
+    \item \textbf{Pósova} - pro každé přirozené číslo k < ½ celkého počtu vrcholů existuje počet uzlů, jejichž stupeň nepřevyšuje k, menší než k
 \end{enumerate}
 
 \section{Algoritmus - Brute force}
 
 Algoritmus začíná prohledávat graf na počátečním vrcholu. Počáteční vrchol může být zadaný uživatelem. Algoritmus pro počáteční bod projde všechny jeho hrany a rekurzivně se zavolá pro vrcholy ke kterým jednotlivé hrany vedou. Nezavolá se rekurzivně a algoritmus pro konkrétní variantu cesty skončí neúspěchem pouze v případě pokud byl vrchol na této konkrétní variantě cesty již prozkoumán nebo při nalezení posledního vrcholu. Poslední vrchol může být také zadaný uživatelem. Bez uvedení vrcholů uživatelem se za první a cílový vrchol vybere vrchol uvedený na prvním řádku zdrojového grafu a hledá se tedy Hamiltonův cyklus. Tento algoritmus je dále označován jako Brute force, protože neobsahuje žádnou optimalizaci.
 
+\section{Vstupní data}
+
+Vstupní data jsou uloženy v souborech \textbf{.in}. Na každém řádku v tomto souboru se nachází právě dva charaktery, které značí daný vrchol. Význam spojení dvou vrcholů značí to, že mají společnou hranu. Tento soubor je potom pomocí jednoduchého python skriptu převeden do formátu \textbf{.dot} (graph description language) a nakonec s pomocí knihovny Graphviz\cite{graphviz} i do formátu \textbf{.png}.
+
+\newpage
+
+\begin{figure}[!h]
+\caption{Formát vstupních dat}
+\includegraphics[]{./inputData.png}
+\centering
+\end{figure}
+\hspace{1,75cm}\textbf{\LARGE{.in}} \hspace{4cm} \textbf{\LARGE{.dot}} \hspace{3,8cm} \textbf{\LARGE{.png}}
+
+
+
 \section{Teoretická složitost}
 
-\subsection{Teoretická prostorová složitost}
+\subsection{Analýza}
+\begin{itemize}
+	\item Celkem existuje $(|V|-1)!$ kružnic
+	\item Každá kružnice má $|V|$ hran
+	\item Potřebujeme zpracovat $|V|$hran
+	\item Časová složitost je faktoriálová - $O(n!)$
+	\item Celkem existuje $(V-1)!/2$ řešení
+	\item Předpokládáme rychlost zpracovávání 1 000 000 000 hran za sekundu
+\end{itemize}
 
-\subsection{Teoretická časová složitost}
+\newpage
 
+\subsection{Výpočet}
+\pgfplotstabletypeset[
+font={\small},
+begin table=\begin{longtable},
+	columns/vertices/.style={column name=Vrcholy},
+	columns/edges/.style={column name=Počet hran ke zpracování},
+	columns/solutions/.style={column name=Počet řešení},
+	columns/executed_time/.style={string type, column name=Čas zpracování},
+	end table=\end{longtable},
+]{./../complexity/theoretical_complexity.txt}
 \section{Experimentální ověření složitosti}
 
-K naměření dat byly použity grafy s počtem vrcholů od 3 do 13 uvedené ve složce `complexity/graphs`. Všechny tyto grafy obsahují hrany propojující každý vrchol se všemi ostatními. Vstupní parametry nejsou zadány, je hledaný Hamiltonův cyklus z A do A. Počet nalezených cyklů odpovídá faktoriálu $(V - 1)!$ kde $V$ značí počet vrcholů.
+K naměření dat byly použity grafy s počtem vrcholů od 3 do 13 uvedené ve složce `complexity/graphs`. Všechny tyto grafy obsahují hrany propojující každý vrchol se všemi ostatními. Vstupní parametry nejsou zadány, je hledaný Hamiltonův cyklus z $A$ do $A$. Počet nalezených cyklů odpovídá faktoriálu $(V - 1)!$ kde $V$ značí počet vrcholů.
 
 \pgfplotstabletypeset[
   font={\small},
@@ -113,17 +148,16 @@ K naměření dat byly použity grafy s počtem vrcholů od 3 do 13 uvedené ve 
   end table=\end{longtable},
 ]{./../complexity/brute_force_info.txt}
 
+%\begin{figure}[!h]
+%    \centering
+%    \caption{Příklad grafu s 5-ti vrcholy obsahující hrany propojující každý vrchol se všemi ostatními}
+%    \includegraphics[width=0.2\textwidth]{./template-fig/5v}
+%\end{figure}
+
 \newpage
-
-\begin{figure}
-    \centering
-    \caption{Příklad grafu s 5-ti vrcholy obsahující hrany propojující každý vrchol se všemi ostatními}
-    \includegraphics[width=0.2\textwidth]{./template-fig/5v}
-\end{figure}
-
 \subsection{Experimentální ověření prostorové složitosti}
 
-\begin{figure}[h!]
+\begin{figure}[h]
 \centering
 \begin{tikzpicture}
 \begin{axis}[
@@ -137,11 +171,12 @@ K naměření dat byly použity grafy s počtem vrcholů od 3 do 13 uvedené ve 
 \end{tikzpicture}
 \end{figure}
 
+
 \section{Experimentální ověření časové složitosti}
 
 K experimentálnímu ověření časové složitosti byly použity hodnoty získané počtem průchodů funkcí `algorithm()`, údaj je ekvivalentní s počtem prozkoumaných vrcholů.
 
-\begin{figure}[h!]
+\begin{figure}[h]
 \centering
 \begin{tikzpicture}
 \begin{axis}[
@@ -154,17 +189,18 @@ K experimentálnímu ověření časové složitosti byly použity hodnoty získ
 \end{axis}
 \end{tikzpicture}
 \end{figure}
-
-test citate \cite{test_citate}
-
+\newpage
 \section{Závěr}
 
 Program byl zkontrolován pomocí programu `valgrind-3.13.0`. V programu nedochází na žádné úniky paměti. V programu je využítá část kódu ze stejného projektu z akademického roku 2018/2019 v souboru `./tests/tests.sh` nepatřící ani jednomu z autorů uvedených v úvodu, autor větší části tohoto souboru je označený v hlaviče a je to Adam Láníček.
 
-\newpage
+
 
 \bibliographystyle{czechiso}
 
 \bibliography{bibliography}
+%\cite{test_citate}
+%\cite{ial_mat}
+%\cite{tsp}
 
 \end{document}

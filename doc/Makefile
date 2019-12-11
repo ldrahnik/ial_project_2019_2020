@@ -13,3 +13,4 @@ clean:
 	rm -f *.bbl
 	rm -f *.blg
 	rm -f *.pdf
+	rm -f *.log

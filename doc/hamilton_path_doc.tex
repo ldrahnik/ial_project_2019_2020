@@ -67,24 +67,24 @@ Dokumentace popisuje implementaci a návrh řešení k zadání č. 2 Hamiltonov
 
 \section{Vstupní podmínky}
 
-V kontrolování předpokladů splnitelnosti je snaha předejít zbytečnému prohledávání grafu algoritmicky. Základní vstupní podmínky jsou takto v programu naimplementovány, rozšířené vstupní podmínky slouží pouze jako informační při zapnutém `debug` přepínači. 
+V kontrolování předpokladů splnitelnosti je snaha předejít zbytečnému prohledávání grafu algoritmicky. Základní vstupní podmínky jsou v programu naimplementovány, rozšířené vstupní podmínky slouží pouze pro informaci při zapnutém `debug` přepínači. 
 
 \subsection{Základní vstupní podmínky}
 
 Není možné v grafu nalézt Hamiltonovu cestu a cyklus pokud nejsou splněna následující pravidla:
 \begin{enumerate}
-	\item Počet uzlů v grafu musí být větší než 2
-	\item Graf musí mít minimálně stupeň 1 pro každý uzel pro nalezení Hamiltonovi cesty
-    \item Graf musí mít pro každý uzel minimálně stupeň 2 pro každý uzel pro nalezení Hamiltonova cyklu
+	\item Počet vrcholů v grafu musí být větší než 2
+	\item Graf musí mít minimálně stupeň 1 pro každý vrchol pro nalezení Hamiltonovi cesty
+    \item Graf musí mít pro každý vrchol minimálně stupeň 2 pro každý vrchol pro nalezení Hamiltonova cyklu
 \end{enumerate}
 \newpage
 \subsection{Rozšířené vstupní podmínky}
 
 K ověření zda lze v grafu nalézt Hamiltonovu cestu a cyklus stačí splnění některé z následujících podmínek. Nesplnění žádné z nich nutně nemusí znamenat, že graf Hamiltonovu cestu nebo cyklus neobsahuje.
 \begin{enumerate}
-    \item \textbf{Diracova} podmínka - každý uzel má stupeň alespoň ½ celkového počtu uzlů
-    \item \textbf{Oreho} podmínka - každá dvojice uzlů nespojených hranou má součet stupňů alespoň jako je celkový počet vrcholů
-    \item \textbf{Pósova} - pro každé přirozené číslo k < ½ celkého počtu vrcholů existuje počet uzlů, jejichž stupeň nepřevyšuje k, menší než k
+    \item \textbf{Diracova} podmínka - každý vrchol má stupeň alespoň ½ celkového počtu vrcholů
+    \item \textbf{Oreho} podmínka - každá dvojice vrcholů nespojených hranou má součet stupňů alespoň jako je celkový počet vrcholů
+    \item \textbf{Pósova} - pro každé přirozené číslo k < ½ celkého počtu vrcholů existuje počet vrcholů, jejichž stupeň nepřevyšuje k, menší než k
 \end{enumerate}
 
 \section{Algoritmus - Brute force}
@@ -99,7 +99,7 @@ Vstupní data jsou uloženy v souborech \textbf{.in}. Na každém řádku v tomt
 
 \begin{figure}[!h]
 \caption{Formát vstupních dat}
-\includegraphics[]{./inputData.png}
+\includegraphics[width=4.1cm,keepaspectratio,trim={1.2cm 1.2cm 1.2cm 1.2cm},clip]{./inputData.png}
 \centering
 \end{figure}
 \hspace{0,55cm}\textbf{\LARGE{.in}} \hspace{6cm} \textbf{\LARGE{.dot}} \hspace{4,6cm} \textbf{\LARGE{.png}}

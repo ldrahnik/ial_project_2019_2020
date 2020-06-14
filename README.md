@@ -1,3 +1,6 @@
+# Assessment
+12.7/15b (no assessment report, -1b defense)
+
 # Ukázka spuštění (manuálně z příkazové řádky)
 
 - `./hpac -h` # nápověda

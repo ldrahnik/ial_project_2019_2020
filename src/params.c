@@ -119,8 +119,17 @@ TParams getParams(int argc, char *argv[]) {
     }
   }
 
+  // catch this case: ./hpac
+  if(argc == 1) {
+    if(params.show_help_message) {
+	   fprintf(stderr, "Option -h is already used.\n");
+       params.ecode = EOPT;
+       return params;
+	 }
+     params.show_help_message = 1;
+     return params;
   // for example catch this case: ./hpac "A B" -s f ggg
-  if(argv[optind + 1] != NULL) {
+  } else if(argv[optind + 1] != NULL) {
     fprintf(stderr, "Option error. Please use optional options before non-options.\n");
     params.ecode = EOPT;
     return params;

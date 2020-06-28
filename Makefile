@@ -14,8 +14,9 @@ P_DOC_MAKEFILE = doc/Makefile
 P_SOURCES = src/*.c
 P_HEADERS = src/*.h
 P_TESTS = tests/tests.sh tests/ref_paths_out/* tests/params_in/* tests/graphs_in/* 
-P_COMPLEXITY = complexity/*
+P_COMPLEXITY = complexity/*.txt
 P_GRAPHVIZ = graphviz/*
+P_README = ./README.md
 
 ################# FLAGS ###########################
 
@@ -33,14 +34,14 @@ $(P_NAME): $(P_SOURCES) $(P_HEADERS)
 ################# ARCHIVE #########################
 
 A_NAME = xdrahn00
-A_FILES = Makefile $(P_DOC_RESULT) $(P_DOC_MAKEFILE) $(P_SOURCES) $(P_HEADERS) $(P_TESTS) $(P_COMPLEXITY) $(P_GRAPHVIZ)
+A_FILES = Makefile $(P_DOC_RESULT) $(P_DOC_MAKEFILE) $(P_SOURCES) $(P_HEADERS) $(P_TESTS) $(P_COMPLEXITY) $(P_GRAPHVIZ) $(P_README)
 
 zip:
 	# build doc
-	make tex
+	#make tex
 
 	# pack
-	zip $(A_NAME).zip $(A_FILES)
+	zip $(A_NAME).zip $(A_FILES) -x *.png -x *.dot
 
 unzip:
 	unzip -d $(A_NAME) $(A_NAME).zip
